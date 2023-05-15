@@ -1,0 +1,13 @@
+node_modules
+build
+coverage
+.vscode
+.DS_STORE
+.DS_Store
+.env
+.env.prod
+.env.test
+tmp
+.editorconfig
+package-lock.json
+.idea

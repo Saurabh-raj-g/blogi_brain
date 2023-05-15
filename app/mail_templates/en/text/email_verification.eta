@@ -1,0 +1,12 @@
+<% layout('./layout') %>
+Hi <%= it.user.username %>,
+
+Verify your email address!
+
+Please click the link below to verify the email address.
+<%= it.user.emailVerificationUrl %>
+
+This link will be expired in 24 hours.
+
+
+Note: If you have not requested this email then, please ignore it.

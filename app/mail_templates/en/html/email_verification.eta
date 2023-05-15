@@ -1,0 +1,11 @@
+<% layout('./layout') %>
+
+<div id="content">
+    <h1>Verify your email address!</h1>
+    <p>
+        Please click the link below to verify the email address.<br/>
+        <%= it.user.emailVerificationUrl %>
+    </p>
+    <p>This link will be expired in 24 hours.</p><br/><br/><br/>
+    <p>Note: If you have not requested this email then, please ignore it.</p>
+</div>
