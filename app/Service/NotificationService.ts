@@ -2,6 +2,7 @@ import EmailVerificationSender from "./NotificationService/Sender/EmailVerificat
 import ResetPasswordSender from "./NotificationService/Sender/ResetPasswordSender";
 import { SenderInterface } from "./NotificationService/Sender/SenderInterface";
 import NotificationEvent from "./NotificationService/NotificationEvent";
+import ChangeEmailRequestSender from "./NotificationService/Sender/ChangeEmailRequestSender";
 
 export default class NotificationService {
    
@@ -17,6 +18,10 @@ export default class NotificationService {
 
         if (event.isResetPasssword()) {
             sender = new ResetPasswordSender();
+        }
+
+        if (event.isChangeEmailRequest()) {
+            sender = new ChangeEmailRequestSender();
         }
 
         if (sender === null) {

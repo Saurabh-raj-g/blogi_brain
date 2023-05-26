@@ -3,7 +3,7 @@ import { Language } from "App/ValueObjects/Language";
 
 export class HtmlMailViewFormatter {
    
-    public toJson(userEntity: UserEntity, _: Language,request:any) {
+    public toJson(userEntity: UserEntity,token:string, _: Language,request:any) {
        if(request === undefined || request ===null){
         throw new  Error("Failed to generate mail template")
        }
@@ -12,9 +12,9 @@ export class HtmlMailViewFormatter {
             username: userEntity.username,
             email: userEntity.email,
             description: userEntity.description,
-            resetPasswordUrl: `${request.headers().origin}/something/${userEntity.resetPasswordToken}`,
+            resetPasswordUrl: `${request.headers().origin}/something/${token}`,
             resetPasswordExpire: userEntity.resetPasswordExpire,
-            emailVerificationUrl: `${request.headers().origin}/something/${userEntity.emailVerificationToken}`,
+            emailVerificationUrl: `${request.headers().origin}/something/${token}`,
             emailVerificationExpire: userEntity.emailVerificationExpire,
             language: userEntity.language.toJson(),
             lastAccessedAt: userEntity.lastAccessedAt,

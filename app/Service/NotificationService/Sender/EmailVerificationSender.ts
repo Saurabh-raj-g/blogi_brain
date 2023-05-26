@@ -13,7 +13,7 @@ export default class EmailVerificationSender implements SenderInterface {
     }
 
     public async send(options: { [key: string]: any } = {}): Promise<void> {
-        const { userId, request } = options;
+        const { userId, request,token } = options;
 
         if (userId === undefined) {
             return;
@@ -30,6 +30,7 @@ export default class EmailVerificationSender implements SenderInterface {
             NotificationEvent.emailVerification(),
             {
                 user: userEntity,
+                token,
                 request
             }
         );

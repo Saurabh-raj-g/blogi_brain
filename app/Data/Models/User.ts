@@ -3,6 +3,8 @@ import { BaseModel, beforeSave, column, HasMany, hasMany } from '@ioc:Adonis/Luc
 import Hash from "@ioc:Adonis/Core/Hash";
 import { UserRole } from 'App/Data/Enums/User';
 import Post from './Post';
+import crypto from "crypto";
+
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: string;
@@ -74,6 +76,16 @@ export default class User extends BaseModel {
   public static async hashPassword(user: User) {
       if (user.$dirty.password) {
           user.password = await Hash.make(user.password);
+      }
+  }
+
+  @beforeSave()
+  public static async hashToken(user: User) {
+      if (user.resetPasswordToken !==null && user.$dirty.resetPasswordToken) {
+          user.resetPasswordToken = crypto.createHash("sha256").update(user.resetPasswordToken).digest("hex");
+      }
+      if (user.emailVerificationToken !==null && user.$dirty.emailVerificationToken) {
+          user.emailVerificationToken = crypto.createHash("sha256").update(user.emailVerificationToken).digest("hex");
       }
   }
 

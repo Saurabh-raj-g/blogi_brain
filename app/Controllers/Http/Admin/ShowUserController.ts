@@ -3,8 +3,9 @@ import { UserRole } from "App/Data/Enums/User";
 import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
 import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
 import { Query } from "App/Domain/Repositories/Abstract/UserRepository/Query";
+import UtilString from "App/Utils/UtilString";
 
-export default class ShowController  {
+export default class ShowUserController  {
     private userRepository :UserRepository;
     constructor(){
         this.userRepository = new UserRepositoryImpl()
@@ -36,7 +37,8 @@ export default class ShowController  {
                 ],
             });
         }
-        const { id } = request.qs();
+        let { id } = request.qs();
+        id = UtilString.getStringOrNull(id)
 
         if (id === undefined || id === null) {
             response.status(400);
@@ -94,7 +96,8 @@ export default class ShowController  {
                 ],
             });
         }
-        const { username } = request.qs();
+        let { username } = request.qs();
+        username = UtilString.getStringOrNull(username)
 
         if (username === undefined || username === null) {
             response.status(400);
@@ -113,7 +116,7 @@ export default class ShowController  {
             return response.send({
                 errors: [
                     {
-                        message: `Not found the user, id:${username}`,
+                        message: `Not found the user, username:${username}`,
                     },
                 ],
             });
@@ -152,7 +155,8 @@ export default class ShowController  {
                 ],
             });
         }
-        const { email } = request.qs();
+        let { email } = request.qs();
+        email = UtilString.getStringOrNull(email);
 
         if (email === undefined || email === null) {
             response.status(400);
@@ -171,7 +175,7 @@ export default class ShowController  {
             return response.send({
                 errors: [
                     {
-                        message: `Not found the user, id:${email}`,
+                        message: `Not found the user, email:${email}`,
                     },
                 ],
             });
@@ -210,11 +214,14 @@ export default class ShowController  {
                 ],
             });
         }
+        
         const params = request.qs()
         const keys = Object.keys(params)
         const query = new Query();
+        
         for(let i=0;i<keys.length; i++){
             query[keys[i]] = params[keys[i]]
+          
         }
         const userEntities = await this.userRepository.search(query);
 
@@ -224,7 +231,7 @@ export default class ShowController  {
             return response.send({
                 errors: [
                     {
-                        message: `Not found the user`,
+                        message: `Not found the users`,
                     },
                 ],
             });
@@ -240,3 +247,24 @@ export default class ShowController  {
 
 
 }
+
+/*
+// const appendParamsToQuery = () => {
+        //     const recurse = (obj: any) => {
+        //         for (let [key, value] of Object.entries(obj ?? {})) {
+        //             if(typeof value === "string"){
+        //                 value = UtilString.getStringOrNull(value) as any
+
+        //             }
+        //             else if(typeof value === "object"){
+        //                 recurse(obj[key]);
+                        
+        //             }
+        //         }
+        //     };
+
+        //     recurse(params);
+        // };
+
+        // appendParamsToQuery();
+*/

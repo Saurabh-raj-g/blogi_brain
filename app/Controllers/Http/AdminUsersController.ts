@@ -1,14 +1,10 @@
-import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
-import AdminUseCase from "App/Domain/UseCases/AdminUseCase";
-import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
 import { UserRole } from "App/Data/Enums/User";
+import UserUseCase from "App/Domain/UseCases/UserUseCase";
 
-export default class AdminController  {
-    private userRepository :UserRepository;
-    private adminUseCase :AdminUseCase;
+export default class AdminUsersController  {
+    private userUseCase :UserUseCase;
     constructor(){
-        this.userRepository = new UserRepositoryImpl()
-        this.adminUseCase = new AdminUseCase();
+        this.userUseCase = new UserUseCase();
     }
     
     public async updateRole({ auth, request, response }) {
@@ -50,7 +46,7 @@ export default class AdminController  {
             });
         }
 
-        await this.adminUseCase.updateRole(authUser.id, role);
+        await this.userUseCase.updateRole(authUser.id, role);
        
         return response.send({
             result:true

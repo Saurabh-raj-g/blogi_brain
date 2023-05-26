@@ -23,7 +23,8 @@ const cloudinaryConfig: CloudinaryConfig = {
 		width:  150,
 		height: 150,
 		crop:   'fit',
-	},
+	}
+
 }
 
 export default cloudinaryConfig

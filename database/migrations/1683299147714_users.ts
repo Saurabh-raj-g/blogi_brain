@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string("full_name", 191).notNullable();
       table.string("username", 191).notNullable().unique();
       table.string("email").notNullable().unique();
-      table.string("change_email").notNullable().unique();
+      table.string("change_email").nullable().unique();
       table.boolean("verified").notNullable().defaultTo(false);
       table.string("avatar_id").nullable();
       table.string("avatar_url").nullable();

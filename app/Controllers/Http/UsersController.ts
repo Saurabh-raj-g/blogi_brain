@@ -51,7 +51,13 @@ export default class UsersController  {
             });
         }
 
-        const {fullName, username,email,password,confirmPassword } = request.body();
+        let {fullName, username,email,password,confirmPassword } = request.body();
+
+        fullName = UtilString.getStringOrNull(fullName)
+        username = UtilString.getStringOrNull(username)
+        email = UtilString.getStringOrNull(email)
+        password = UtilString.getStringOrNull(password)
+        confirmPassword = UtilString.getStringOrNull(confirmPassword)
 
         if (fullName === undefined || fullName === null) {
             response.status(400);
@@ -119,7 +125,31 @@ export default class UsersController  {
             });
         }
 
-        
+        let existed = await this.userRepository.findByUsername(username);
+
+        if(existed !== null){
+            response.status(400);
+            return response.send({
+                errors: [
+                    {
+                        message: `username not available: ${username}`,
+                    },
+                ],
+            });
+        }
+
+        existed = await this.userRepository.findByEmail(email);
+
+        if(existed !== null){
+            response.status(400);
+            return response.send({
+                errors: [
+                    {
+                        message: "email not available",
+                    },
+                ],
+            });
+        }
 
        const userEntity = await this.userUseCase.create(
         UtilString.getStringOrNull(fullName)!,
@@ -149,8 +179,9 @@ export default class UsersController  {
     }
 
     public async verifyEmail({ request, response }) {
-        
-        const { id,token } = request.qs();
+        let { id,token } = request.qs();
+        id = UtilString.getStringOrNull(id)
+        token = UtilString.getStringOrNull(token)
 
         if (id === undefined || id === null) {
             response.status(400);
@@ -208,7 +239,10 @@ export default class UsersController  {
             });
         }
 
-        const { username, email, password } = request.body();
+        let { username, email, password } = request.body();
+        username = UtilString.getStringOrNull(username)
+        email = UtilString.getStringOrNull(email)
+        password = UtilString.getStringOrNull(password)
 
         if ((username ===undefined || username === null )&& (email === undefined ||email === null)) {
             response.status(400);
@@ -298,8 +332,9 @@ export default class UsersController  {
             });
         }
 
-        const { username, email } = request.body();
-
+        let { username, email } = request.body();
+        username = UtilString.getStringOrNull(username)
+        email = UtilString.getStringOrNull(email)
         if ((username ===undefined || username === null )&& (email === undefined ||email === null)) {
             response.status(400);
             return response.send({
@@ -347,8 +382,12 @@ export default class UsersController  {
             });
         }
 
-        const {token, username} = request.qs();
-        const {password, confirmPassword} = request.body();
+        let {token, username} = request.qs();
+        let {password, confirmPassword} = request.body();
+        token = UtilString.getStringOrNull(token)
+        username = UtilString.getStringOrNull(username)
+        password = UtilString.getStringOrNull(password)
+        confirmPassword = UtilString.getStringOrNull(confirmPassword)
 
         if (token ===undefined  ||token === null) {
             response.status(400);
@@ -443,7 +482,9 @@ export default class UsersController  {
             });
         }
 
-        const {password, confirmPassword} = request.body();
+        let {password, confirmPassword} = request.body();
+        password = UtilString.getStringOrNull(password)
+        confirmPassword = UtilString.getStringOrNull(confirmPassword)
 
         if (password ===undefined  ||password === null) {
             response.status(400);
@@ -491,7 +532,8 @@ export default class UsersController  {
     }
 
     public async isUsernameAvailable({ auth, request, response }) {
-        const { username } = request.qs();
+        let { username } = request.qs();
+        username = UtilString.getStringOrNull(username)
 
         if (username === undefined || username === null) {
             response.status(400);
@@ -533,7 +575,8 @@ export default class UsersController  {
     }
 
     public async isEmailAvailable({ auth, request, response }) {
-        const { email } = request.qs();
+        let { email } = request.qs();
+        email = UtilString.getStringOrNull(email)
 
         if (email === undefined || email === null) {
             response.status(400);
@@ -589,13 +632,15 @@ export default class UsersController  {
 
         const authUser = auth.use("api").user;
 
-        const {
+        let {
             username,
             title,
             description,
         } = request.body();
-
-        if (username === undefined || username === null) {
+        username = UtilString.getStringOrNull(username)
+        title = UtilString.getStringOrNull(title)
+        description = UtilString.getStringOrNull(description)
+        if (username === undefined || username === null || username === "") {
             response.status(400);
             return response.send({
                 errors: [
@@ -619,9 +664,9 @@ export default class UsersController  {
 
         await this.userRepository.update(
             authUser.id,
-            UtilString.getStringOrNull(username)!,
-            UtilString.getStringOrNull(title),
-            UtilString.getStringOrNull(description),
+            username,
+            title,
+           description,
         );
     
         return response.send({
@@ -707,7 +752,8 @@ export default class UsersController  {
 
         const authUser = auth.use("api").user;
 
-        const { email } = request.body();
+        let { email } = request.body();
+        email = UtilString.getStringOrNull(email)
 
         if (email === undefined || email === null) {
             response.status(400);
@@ -721,53 +767,6 @@ export default class UsersController  {
         }
 
         await this.userUseCase.changeEmailRequest(authUser.id, email,request);
-
-        return response.send({
-            result: true,
-        });
-    }
-
-    public async updateEmail({ request, response }) {
-        
-        const { id,token } = request.qs();
-
-        if (id === undefined || id === null) {
-            response.status(400);
-            return response.send({
-                errors: [
-                    {
-                        message: "id must be specified",
-                    },
-                ],
-            });
-        }
-
-        if (token ===undefined  ||token === null) {
-            response.status(400);
-            return response.send({
-                errors: [
-                    {
-                        message:
-                            "token must be specified",
-                    },
-                ],
-            });
-        }
-
-        const userEntity = await this.userRepository.findById(id);
-
-        if (userEntity === null) {
-            response.status(404);
-            const errors = [
-                {
-                    message: `Not found the user: ${id}`,
-                },
-            ];
-            return response.send({ errors });
-        }
-
-
-        await this.userUseCase.updateEmail(id,token);
 
         return response.send({
             result: true,
@@ -789,7 +788,8 @@ export default class UsersController  {
 
         const authUser = auth.use("api").user;
 
-        const { language } = request.body();
+        let { language } = request.body();
+        language = UtilString.getStringOrNull(language)
 
         if (language === undefined || language === null) {
             response.status(400);

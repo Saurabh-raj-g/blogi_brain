@@ -15,6 +15,12 @@ export default class NotificationEvent extends Base {
                 label: "Reset Password",
                 description: "Notifies to the user reset password",
             },
+            {
+                id: 3,
+                name: "changeEmailRequest",
+                label: "Change Email Request",
+                description: "Notifies to the user change email request",
+            },
         ];
     }
 
@@ -30,12 +36,20 @@ export default class NotificationEvent extends Base {
         return this.fromName("emailVerification");
     }
 
+    public static changeEmailRequest(): NotificationEvent {
+        return this.fromName("changeEmailRequest");
+    }
+
     public isEmailVerification(): boolean {
         return this.getName() === "emailVerification";
     }
 
     public isResetPasssword(): boolean {
         return this.getName() === "resetPasssword";
+    }
+
+    public isChangeEmailRequest(): boolean {
+        return this.getName() === "changeEmailRequest";
     }
 
     public toJsonForGeneral(): { [key: string]: string | number | boolean } {
