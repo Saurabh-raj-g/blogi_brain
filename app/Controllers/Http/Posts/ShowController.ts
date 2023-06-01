@@ -3,6 +3,8 @@ import { PostStatus } from "App/Data/Enums/Post";
 import PostRepositoryImpl from "App/Data/Repositories/PostRepositoryImpl";
 import PostRepository from "App/Domain/Repositories/Abstract/PostRepository";
 import { Query } from "App/Domain/Repositories/Abstract/PostRepository/Query";
+import UtilString from "App/Utils/UtilString";
+import { PostType } from "types/PostType";
 
 export default class ShowController  {
     private postRepository :PostRepository;
@@ -15,7 +17,8 @@ export default class ShowController  {
        const isLoggedIn = auth.use("api").isLoggedIn ;
        const authUser = await auth.use("api").user;
 
-        const { id } = params;
+        let { id } = params;
+        id = UtilString.getStringOrNull(id)
 
         if (id === undefined) {
             response.status(400);
@@ -97,23 +100,26 @@ export default class ShowController  {
 
         const formatter = new PostFormatter();
         
-        const postJsons = postEntities.map(async(postEntity) => {
+        const postJsons: PostType[] = []
+
+        postEntities.map((postEntity) => {
             if(!isLoggedIn){
                 if (postEntity.status === PostStatus.PUBLIC) {
-                    return formatter.toJson(postEntity)
+                    postJsons.push(formatter.toJson(postEntity))
                 }
+                return;
             }
 
             if(isLoggedIn){
                 if (postEntity.status !== PostStatus.PUBLIC) {
                     if(authUser.id === postEntity.userId){
-                        return formatter.toJson(postEntity)
+                        postJsons.push(formatter.toJson(postEntity))
                     }
                     return;
                 }
+                postJsons.push(formatter.toJson(postEntity))
             }
 
-            return formatter.toJson(postEntity)
         });
 
         return response.send({

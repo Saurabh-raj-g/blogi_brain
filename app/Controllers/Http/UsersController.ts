@@ -179,16 +179,16 @@ export default class UsersController  {
     }
 
     public async verifyEmail({ request, response }) {
-        let { id,token } = request.qs();
-        id = UtilString.getStringOrNull(id)
+        let { userId,token } = request.qs();
+        userId = UtilString.getStringOrNull(userId)
         token = UtilString.getStringOrNull(token)
 
-        if (id === undefined || id === null) {
+        if (userId === undefined || userId === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message: "id must be specified",
+                        message: "userId must be specified",
                     },
                 ],
             });
@@ -206,20 +206,20 @@ export default class UsersController  {
             });
         }
 
-        const userEntity = await this.userRepository.findById(id);
+        const userEntity = await this.userRepository.findById(userId);
 
         if (userEntity === null) {
             response.status(404);
             const errors = [
                 {
-                    message: `Not found the user: ${id}`,
+                    message: `Not found the user: ${userId}`,
                 },
             ];
             return response.send({ errors });
         }
 
 
-        await this.userUseCase.verifyEmail(id,token);
+        await this.userUseCase.verifyEmail(userId,token);
 
         return response.send({
             result: true,
@@ -239,12 +239,11 @@ export default class UsersController  {
             });
         }
 
-        let { username, email, password } = request.body();
-        username = UtilString.getStringOrNull(username)
-        email = UtilString.getStringOrNull(email)
+        let { usernameOrEmail, password } = request.body();
+        usernameOrEmail = UtilString.getStringOrNull(usernameOrEmail)
         password = UtilString.getStringOrNull(password)
 
-        if ((username ===undefined || username === null )&& (email === undefined ||email === null)) {
+        if (usernameOrEmail ===undefined || usernameOrEmail === null ) {
             response.status(400);
             return response.send({
                 errors: [
@@ -270,20 +269,20 @@ export default class UsersController  {
         }
 
         const userEntity = await this.userRepository.findByUsernameOrEmail(
-            email ? email :username
+            usernameOrEmail
         );
 
         if (userEntity === null) {
             response.status(404);
             const errors = [
                 {
-                    message: `Not found the user: ${ email ? email :username}`,
+                    message: `Not found the user: ${usernameOrEmail}`,
                 },
             ];
             return response.send({ errors });
         }
 
-        const token = await auth.use("api").attempt(email ? email :username,password,
+        const token = await auth.use("api").attempt(usernameOrEmail,password,
                 {
                     name: "login",
                     expiresIn: Env.get("TOKEN_EXPIRES"),
@@ -332,10 +331,9 @@ export default class UsersController  {
             });
         }
 
-        let { username, email } = request.body();
-        username = UtilString.getStringOrNull(username)
-        email = UtilString.getStringOrNull(email)
-        if ((username ===undefined || username === null )&& (email === undefined ||email === null)) {
+        let { usernameOrEmail } = request.body();
+        usernameOrEmail = UtilString.getStringOrNull(usernameOrEmail)
+        if (usernameOrEmail ===undefined || usernameOrEmail === null ) {
             response.status(400);
             return response.send({
                 errors: [
@@ -348,14 +346,14 @@ export default class UsersController  {
         }
 
         const userEntity = await this.userRepository.findByUsernameOrEmail(
-            email ? email :username
+            usernameOrEmail
         );
 
         if (userEntity === null) {
             response.status(404);
             const errors = [
                 {
-                    message: `Not found the user: ${ email ? email :username}`,
+                    message: `Not found the user: ${usernameOrEmail}`,
                 },
             ];
             return response.send({ errors });
@@ -382,8 +380,7 @@ export default class UsersController  {
             });
         }
 
-        let {token, username} = request.qs();
-        let {password, confirmPassword} = request.body();
+        let {token, username,password, confirmPassword} = request.body();
         token = UtilString.getStringOrNull(token)
         username = UtilString.getStringOrNull(username)
         password = UtilString.getStringOrNull(password)

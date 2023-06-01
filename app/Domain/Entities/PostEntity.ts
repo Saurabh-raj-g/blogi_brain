@@ -13,7 +13,7 @@ export default class PostEntity implements BaseEntityInterface {
         entity.id = json.id;
         entity.userId = json.userId;
         entity.readTime = json.readTime;
-        entity.readTimeType = json.readTimeType;
+        entity.readTimeType = readTimeType;
         entity.title = json.title;
         entity.status = json.status;
         entity.body = json.body;
@@ -46,7 +46,7 @@ export default class PostEntity implements BaseEntityInterface {
             id: this.id,
             userId: this.userId,
             readTime: this.readTime,
-            readTimeType: this.readTimeType?.getName(),
+            readTimeType: this.readTimeType !==null ? this.readTimeType.getName() : null,
             title: this.title,
             status: this.status,
             body: this.body,

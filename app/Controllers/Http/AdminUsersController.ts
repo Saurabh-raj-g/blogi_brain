@@ -1,10 +1,15 @@
 import { UserRole } from "App/Data/Enums/User";
+import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
+import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
 import UserUseCase from "App/Domain/UseCases/UserUseCase";
+import UtilString from "App/Utils/UtilString";
 
 export default class AdminUsersController  {
     private userUseCase :UserUseCase;
+    private userRepository :UserRepository;
     constructor(){
         this.userUseCase = new UserUseCase();
+        this.userRepository = new UserRepositoryImpl()
     }
     
     public async updateRole({ auth, request, response }) {
@@ -33,7 +38,9 @@ export default class AdminUsersController  {
             });
         }
 
-        const { role } = request.body();
+        let {id, role } = request.body();
+        role = UtilString.getStringOrNull(role)
+        id = UtilString.getStringOrNull(id)
 
         if (role === undefined || role === null) {
             response.status(400);
@@ -46,7 +53,30 @@ export default class AdminUsersController  {
             });
         }
 
-        await this.userUseCase.updateRole(authUser.id, role);
+        if (id === undefined || id === null) {
+            response.status(400);
+            return response.send({
+                errors: [
+                    {
+                        message: "id must be specified",
+                    },
+                ],
+            });
+        }
+
+        const userEntity = await this.userRepository.findById(id);
+
+        if (userEntity === null) {
+            response.status(404);
+            const errors = [
+                {
+                    message: `Not found the user: ${id}`,
+                },
+            ];
+            return response.send({ errors });
+        }
+
+        await this.userUseCase.updateRole(id, role);
        
         return response.send({
             result:true

@@ -105,13 +105,10 @@ export default class ShowController  {
             query[keys[i]] = params[keys[i]]
         }
 
-       
-
         const postEntities = await this.postRepository.search(query);
-
         const formatter = new PostFormatter();
         
-        const postJsons = postEntities.map(async(postEntity) => {
+        const postJsons = postEntities.map((postEntity) => {
             return formatter.toJson(postEntity)
         });
 

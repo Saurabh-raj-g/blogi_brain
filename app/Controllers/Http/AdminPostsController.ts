@@ -2,6 +2,7 @@ import PostRepository from "App/Domain/Repositories/Abstract/PostRepository";
 import PostRepositoryImpl from "App/Data/Repositories/PostRepositoryImpl";
 import { PostStatus } from "App/Data/Enums/Post";
 import { UserRole } from "App/Data/Enums/User";
+import UtilString from "App/Utils/UtilString";
 
 
 export default class AdminPostsController  {
@@ -36,7 +37,9 @@ export default class AdminPostsController  {
             });
         }
 
-        const {status,id} = request.body();
+        let {status,id} = request.body();
+        status = UtilString.getStringOrNull(status)
+        id = UtilString.getStringOrNull(id)
 
         if (status === undefined ||status === null) {
             response.status(400);

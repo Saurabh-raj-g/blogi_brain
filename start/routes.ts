@@ -50,3 +50,23 @@ Route.get("/admin/user/findByEmail", "Admin/ShowUserController.findByEmail");
 Route.get("/admin/user/search", "Admin/ShowUserController.search");
 
 Route.post("/admin/update/user/role", "AdminUsersController.updateRole");
+
+
+
+
+
+
+//  ------Post Route -> User------
+
+Route.post("/user/post/create", "PostsController.create");
+Route.get("/post/search", "Posts/ShowController.search");
+Route.get("post/:id", "Posts/ShowController.findById");
+
+//  ------Post Route -> Only Admin------
+
+Route.post("/admin/post/ban", "AdminPostsController.banPost");
+Route.get("/admin/post/search", "Admin/ShowAdminPostsController.search");
+Route.get("/admin/post/:id", "Admin/ShowAdminPostsController.findById");
+
+
+
