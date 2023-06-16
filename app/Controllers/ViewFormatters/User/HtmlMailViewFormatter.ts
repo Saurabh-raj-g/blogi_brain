@@ -14,7 +14,7 @@ export class HtmlMailViewFormatter {
             description: userEntity.description,
             resetPasswordUrl: `${request.headers().origin}/something/${token}`,
             resetPasswordExpire: userEntity.resetPasswordExpire,
-            emailVerificationUrl: `${request.headers().origin}/something/${token}`,
+            emailVerificationUrl: `${request.headers().origin}/user/email/verify/${userEntity.id}/${token}`,
             emailVerificationExpire: userEntity.emailVerificationExpire,
             language: userEntity.language.toJson(),
             lastAccessedAt: userEntity.lastAccessedAt,
