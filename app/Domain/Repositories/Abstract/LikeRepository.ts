@@ -19,7 +19,7 @@ export default abstract class LikeRepository {
         options?: { [key: string]: any }
     ): Promise<LikeEntity[]>;
     abstract existsById(id: string): Promise<boolean>;
-    abstract create(
+    abstract save(
         likeEntity: LikeEntity,
         options?: { [key: string]: any }
     ): Promise<LikeEntity | null>;

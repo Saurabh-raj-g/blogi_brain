@@ -19,7 +19,7 @@ export default abstract class CommentLikeRepository {
         options?: { [key: string]: any }
     ): Promise<CommentLikeEntity[]>;
     abstract existsById(id: string): Promise<boolean>;
-    abstract create(
+    abstract save(
         CommentLikeEntity: CommentLikeEntity,
         options?: { [key: string]: any }
     ): Promise<CommentLikeEntity | null>;

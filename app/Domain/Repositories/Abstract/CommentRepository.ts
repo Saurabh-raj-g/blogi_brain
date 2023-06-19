@@ -1,7 +1,7 @@
 import CommentEntity from "App/Domain/Entities/CommentEntity";
 import { Query } from "App/Domain/Repositories/Abstract/CommentRepository/Query";
 
-export default abstract class CommentLikeRepository {
+export default abstract class CommentRepository {
     abstract findById(
         id: string,
         options?: { [key: string]: any }
@@ -19,7 +19,7 @@ export default abstract class CommentLikeRepository {
         options?: { [key: string]: any }
     ): Promise<CommentEntity[]>;
     abstract existsById(id: string): Promise<boolean>;
-    abstract create(
+    abstract save(
         CommentEntity: CommentEntity,
         options?: { [key: string]: any }
     ): Promise<CommentEntity | null>;
