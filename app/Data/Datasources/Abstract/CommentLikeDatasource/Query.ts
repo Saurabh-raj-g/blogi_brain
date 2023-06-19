@@ -8,7 +8,7 @@ export class Query {
     public userId: string | null = null;
     public commentId: string | null = null;
     public commentIds: string[] | null = null;
-    public notcommentIds: string[] | null = null;
+    public notCommentIds: string[] | null = null;
     public like: boolean | null = null;
     public dislike: boolean | null = null;
 
@@ -48,8 +48,8 @@ export class Query {
         if (options["commentIds"] !== undefined) {
             this.commentIds = options["commentIds"];
         }
-        if (options["notcommentIds"] !== undefined) {
-            this.notcommentIds = options["notcommentIds"];
+        if (options["notCommentIds"] !== undefined) {
+            this.notCommentIds = options["notCommentIds"];
         }
         if (options["like"] !== undefined) {
             this.like = options["like"];

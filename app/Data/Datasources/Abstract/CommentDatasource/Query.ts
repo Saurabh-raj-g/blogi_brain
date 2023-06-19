@@ -6,9 +6,9 @@ export class Query {
     public notIds: string[] | null = null;
 
     public userId: string | null = null;
-    public commentId: string | null = null;
-    public commentIds: string[] | null = null;
-    public notCommentIds: string[] | null = null;
+    public postId: string | null = null;
+    public postIds: string[] | null = null;
+    public notPostIds: string[] | null = null;
     public comment: string | null = null;
 
     public minCreatedAt: DateTime | null = null;
@@ -41,14 +41,14 @@ export class Query {
         if (options["userId"] !== undefined) {
             this.userId = options["userId"];
         }
-        if (options["commentId"] !== undefined) {
-            this.commentId = options["commentId"];
+        if (options["postId"] !== undefined) {
+            this.postId = options["postId"];
         }
-        if (options["commentIds"] !== undefined) {
-            this.commentIds = options["commentIds"];
+        if (options["postIds"] !== undefined) {
+            this.postIds = options["postIds"];
         }
-        if (options["notCommentIds"] !== undefined) {
-            this.notCommentIds = options["notCommentIds"];
+        if (options["notPostIds"] !== undefined) {
+            this.notPostIds = options["notPostIds"];
         }
         if (options["comment"] !== undefined) {
             this.comment = options["comment"];
@@ -65,7 +65,6 @@ export class Query {
         if (options["maxUpdatedAt"] !== undefined) {
             this.maxUpdatedAt = options["maxUpdatedAt"];
         }
-
         if (options["offset"] !== undefined) {
             this.offset = options["offset"];
         }
