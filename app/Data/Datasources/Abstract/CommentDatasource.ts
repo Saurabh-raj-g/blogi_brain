@@ -29,7 +29,6 @@ export default abstract class CommentDatasource {
         options?: { [key: string]: any }
     ): Promise<Comment | null>;
     abstract totalCount(query: Query): Promise<number>;
-    abstract totalComments(query: Query): Promise<number>;
     abstract search(
         query: Query,
         options?: { [key: string]: any }
