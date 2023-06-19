@@ -19,13 +19,14 @@ export default abstract class CommentLikeDatasource {
         userId: string,
         options?: { [key: string]: any }
     ): Promise<CommentLike[]>;
-    abstract findByPostId(
-        postId: string,
+    abstract findByCommentId(
+        commmentId: string,
         options?: { [key: string]: any }
     ): Promise<CommentLike[]>;
+    //todo findByIDPostIDAndUserId()
     abstract existsById(id: string): Promise<boolean>;
     abstract save(
-        like: CommentLike,
+        commentLike: CommentLike,
         options?: { [key: string]: any }
     ): Promise<CommentLike | null>;
     abstract totalCount(query: Query): Promise<number>;

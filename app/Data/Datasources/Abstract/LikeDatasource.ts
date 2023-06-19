@@ -23,6 +23,7 @@ export default abstract class LikeDatasource {
         postId: string,
         options?: { [key: string]: any }
     ): Promise<Like[]>;
+   //todo findByIDPostIDAndUserId()
     abstract existsById(id: string): Promise<boolean>;
     abstract save(
         like: Like,

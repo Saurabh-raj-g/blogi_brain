@@ -33,17 +33,8 @@ export default class CommentLikeLocalDatasourceImpl implements CommentLikeDataso
         return CommentLike.query().where("user_id", userId);
     }
 
-    findByPostId(postId: string, _?: { [key: string]: any; } | undefined): Promise<CommentLike[]> {
-        return CommentLike.query().where("post_id", postId);
-    }
-
-    findByPostIds(postIds: string[], _?: { [key: string]: any; } | undefined): Promise<CommentLike[]> {
-        if (postIds.length === 0) {
-            return new Promise((resolve) => {
-                resolve([]);
-            });
-        }
-        return CommentLike.query().whereIn("post_id", postIds);
+    findByCommentId(commentId: string, _?: { [key: string]: any; } | undefined): Promise<CommentLike[]> {
+        return CommentLike.query().where("comment_id", commentId);
     }
 
     async existsById(id: string): Promise<boolean> {

@@ -18,13 +18,14 @@ export default abstract class CommentLikeRepository {
         commentId: string,
         options?: { [key: string]: any }
     ): Promise<CommentLikeEntity[]>;
+    //todo findByIDPostIDAndUserId()
     abstract existsById(id: string): Promise<boolean>;
     abstract save(
-        CommentLikeEntity: CommentLikeEntity,
+        commentLikeEntity: CommentLikeEntity,
         options?: { [key: string]: any }
     ): Promise<CommentLikeEntity | null>;
     abstract update(
-        CommentLikeEntity: CommentLikeEntity,
+        commentLikeEntity: CommentLikeEntity,
         options?: { [key: string]: any }
     ): Promise<CommentLikeEntity | null>;
     abstract totalCount(query: Query): Promise<number>;

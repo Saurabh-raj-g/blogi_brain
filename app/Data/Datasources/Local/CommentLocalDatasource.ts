@@ -38,9 +38,9 @@ export default class CommentLocalDatasourceImpl implements CommentDatasource {
     }
 
     async existsById(id: string): Promise<boolean> {
-        const commentLike = await Comment.findBy("id", id);
+        const comment = await Comment.findBy("id", id);
         return new Promise((resolve) => {
-            resolve(commentLike !== null);
+            resolve(comment !== null);
         });
     }
 
@@ -149,19 +149,19 @@ export default class CommentLocalDatasourceImpl implements CommentDatasource {
             queryBuilder.where("user_id", userId);
         }
         if (postId !== null) {
-            queryBuilder.where("comment_id", postId);
+            queryBuilder.where("post_id", postId);
         }
         if (postIds !== null) {
             if (postIds.length === 0) {
-                queryBuilder.where("comment_id", "NOT_EXIST");
+                queryBuilder.where("post_id", "NOT_EXIST");
             }
             if (postIds.length !== 0) {
-                queryBuilder.whereIn("comment_id", postIds);
+                queryBuilder.whereIn("post_id", postIds);
             }
         }
         if (notPostIds !== null) {
             for (const notPostId of notPostIds) {
-                queryBuilder.whereNot("comment_id", notPostId);
+                queryBuilder.whereNot("post_id", notPostId);
             }
         }
         if (comment !== null) {

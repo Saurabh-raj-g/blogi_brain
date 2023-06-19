@@ -18,6 +18,7 @@ export default abstract class LikeRepository {
         postId: string,
         options?: { [key: string]: any }
     ): Promise<LikeEntity[]>;
+    //todo findByIDPostIDAndUserId()
     abstract existsById(id: string): Promise<boolean>;
     abstract save(
         likeEntity: LikeEntity,

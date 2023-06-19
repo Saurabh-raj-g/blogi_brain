@@ -8,8 +8,8 @@ export default class extends BaseSchema {
       table.uuid('id').primary()
       table.uuid('post_id').notNullable()
       table.uuid('user_id').notNullable()
-      table.boolean('like').notNullable()
-      table.boolean('dislike').notNullable()
+      table.boolean('like').nullable().defaultTo(false)
+      table.boolean('dislike').nullable().defaultTo(false)
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

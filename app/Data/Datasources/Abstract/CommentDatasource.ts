@@ -25,7 +25,7 @@ export default abstract class CommentDatasource {
     ): Promise<Comment[]>;
     abstract existsById(id: string): Promise<boolean>;
     abstract save(
-        like: Comment,
+        comment: Comment,
         options?: { [key: string]: any }
     ): Promise<Comment | null>;
     abstract totalCount(query: Query): Promise<number>;

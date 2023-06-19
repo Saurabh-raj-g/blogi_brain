@@ -20,11 +20,11 @@ export default abstract class CommentRepository {
     ): Promise<CommentEntity[]>;
     abstract existsById(id: string): Promise<boolean>;
     abstract save(
-        CommentEntity: CommentEntity,
+        commentEntity: CommentEntity,
         options?: { [key: string]: any }
     ): Promise<CommentEntity | null>;
     abstract update(
-        CommentEntity: CommentEntity,
+        commentEntity: CommentEntity,
         options?: { [key: string]: any }
     ): Promise<CommentEntity | null>;
     abstract totalCount(query: Query): Promise<number>;
