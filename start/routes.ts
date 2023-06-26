@@ -79,3 +79,13 @@ Route.get("/comment/like/status", "CommentLikes/ShowController.postLikedStatus")
 Route.post("/comment/like/createLike", "CommentLikesController.createLike");
 Route.post("/comment/like/createDislike", "CommentLikesController.createDislike");
 Route.post("/comment/like/delete", "CommentLikesController.delete");
+
+// ------Comments Route -> User ------
+Route.post("/user/comment/create", "CommentsController.create");
+Route.post("/comment/update", "CommentsController.update");
+Route.post("/comment/delete", "CommentsController.delete");
+Route.get("/comment/search", "Comments/ShowController.search");
+Route.get("/comment/:id", "Comments/ShowController.findById");
+Route.get("/comment/findByPostId", "Comments/ShowController.findByPostId");
+Route.get("/comment/findByUserId", "Comments/ShowController.findByUserId");
+Route.get("/comment/totalComments", "Comments/ShowController.totalComments");
