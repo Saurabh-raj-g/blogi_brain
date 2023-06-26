@@ -81,7 +81,9 @@ export default class LikesController {
             commentLikeEntity.like = true;
             commentLikeEntity.dislike = false;
             try {
-                commentLikeEntity = await this.commentLikeRepository.save(commentLikeEntity);
+                commentLikeEntity = await this.commentLikeRepository.save(
+                    commentLikeEntity
+                );
                 return response.send({
                     return: true,
                 });
@@ -105,7 +107,9 @@ export default class LikesController {
             commentLikes[0].like = true;
             commentLikes[0].dislike = false;
             try {
-                commentLikes[0] = await this.commentLikeRepository.update(commentLikes[0]);
+                commentLikes[0] = await this.commentLikeRepository.update(
+                    commentLikes[0]
+                );
                 return response.send({
                     return: true,
                 });
@@ -189,7 +193,9 @@ export default class LikesController {
             commentLikeEntity.like = false;
             commentLikeEntity.dislike = true;
             try {
-                commentLikeEntity = await this.commentLikeRepository.save(commentLikeEntity);
+                commentLikeEntity = await this.commentLikeRepository.save(
+                    commentLikeEntity
+                );
                 return response.send({
                     return: true,
                 });
@@ -213,7 +219,9 @@ export default class LikesController {
             commentLikes[0].like = false;
             commentLikes[0].dislike = true;
             try {
-                commentLikes[0] = await this.commentLikeRepository.update(commentLikes[0]);
+                commentLikes[0] = await this.commentLikeRepository.update(
+                    commentLikes[0]
+                );
                 return response.send({
                     return: true,
                 });

@@ -82,7 +82,9 @@ export default class ShowController {
             });
         }
 
-        const commentEntities = await this.commentRepository.findByPostId(postId);
+        const commentEntities = await this.commentRepository.findByPostId(
+            postId
+        );
 
         const formatter = new CommentFormatter();
         const comments = commentEntities.map((commentEntity) => {
@@ -106,7 +108,9 @@ export default class ShowController {
             });
         }
 
-        const commentEntities = await this.commentRepository.findByUserId(userId);
+        const commentEntities = await this.commentRepository.findByUserId(
+            userId
+        );
 
         const formatter = new CommentFormatter();
         const comments = commentEntities.map((commentEntity) => {
@@ -137,7 +141,7 @@ export default class ShowController {
         });
     }
     public async search({ request, response }) {
-        let { postId, userId, comment} = request.qs();
+        let { postId, userId, comment } = request.qs();
         postId = UtilString.getStringOrNull(postId);
 
         if (postId === null) {
@@ -167,7 +171,7 @@ export default class ShowController {
         });
     }
     public async totalComments({ request, response }) {
-        let { postId, userId} = request.qs();
+        let { postId, userId } = request.qs();
         postId = UtilString.getStringOrNull(postId);
 
         if (postId === null) {

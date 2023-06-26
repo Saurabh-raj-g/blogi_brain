@@ -34,7 +34,10 @@ export default class CommentLikeLocalDatasourceImpl
         return CommentLike.query().where("user_id", userId);
     }
 
-    findByCommentId(commentId: string, _?: { [key: string]: any; } | undefined): Promise<CommentLike[]> {
+    findByCommentId(
+        commentId: string,
+        _?: { [key: string]: any } | undefined
+    ): Promise<CommentLike[]> {
         return CommentLike.query().where("comment_id", commentId);
     }
 

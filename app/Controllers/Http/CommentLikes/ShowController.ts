@@ -79,7 +79,9 @@ export default class ShowController {
             });
         }
 
-        const totalDislikes = await this.commentLikeRepository.totalDislikes(query);
+        const totalDislikes = await this.commentLikeRepository.totalDislikes(
+            query
+        );
 
         return response.send({
             totalDislikes,

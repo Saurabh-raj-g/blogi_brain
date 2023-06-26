@@ -78,7 +78,7 @@ export default class CommentsController {
             });
         }
 
-        let commentEntity:any = new CommentEntity()
+        let commentEntity: any = new CommentEntity();
         commentEntity.postId = postId;
         commentEntity.userId = authUser.id;
         commentEntity.comment = body;
@@ -144,7 +144,9 @@ export default class CommentsController {
             });
         }
 
-        let commentEntity:any = await this.commentRepository.findById(commentId);
+        let commentEntity: any = await this.commentRepository.findById(
+            commentId
+        );
 
         if (commentEntity === null) {
             response.status(404);
@@ -219,7 +221,9 @@ export default class CommentsController {
             });
         }
 
-        let commentEntity:any = await this.commentRepository.findById(commentId);
+        let commentEntity: any = await this.commentRepository.findById(
+            commentId
+        );
 
         if (commentEntity === null) {
             response.status(404);
@@ -258,6 +262,5 @@ export default class CommentsController {
                 ],
             });
         }
-
     }
 }

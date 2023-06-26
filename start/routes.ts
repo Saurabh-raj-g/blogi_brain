@@ -74,10 +74,19 @@ Route.post("/post/like/delete", "LikesController.delete");
 
 // ------Likes Comments Route -> Likes ------
 Route.get("/comment/like/totalLikes", "CommentLikes/ShowController.totalLikes");
-Route.get("/comment/like/totalDislikes", "CommentLikes/ShowController.totalDislikes");
-Route.get("/comment/like/status", "CommentLikes/ShowController.postLikedStatus");
+Route.get(
+    "/comment/like/totalDislikes",
+    "CommentLikes/ShowController.totalDislikes"
+);
+Route.get(
+    "/comment/like/status",
+    "CommentLikes/ShowController.postLikedStatus"
+);
 Route.post("/comment/like/createLike", "CommentLikesController.createLike");
-Route.post("/comment/like/createDislike", "CommentLikesController.createDislike");
+Route.post(
+    "/comment/like/createDislike",
+    "CommentLikesController.createDislike"
+);
 Route.post("/comment/like/delete", "CommentLikesController.delete");
 
 // ------Comments Route -> User ------
