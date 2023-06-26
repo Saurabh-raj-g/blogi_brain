@@ -1,4 +1,3 @@
-import { DefaultViewFormatter as LikeFormatter } from "App/Controllers/ViewFormatters/Like/DefaultViewFormatter";
 import LikeRepository from "App/Domain/Repositories/Abstract/LikeRepository";
 import PostRepository from "App/Domain/Repositories/Abstract/PostRepository";
 import LikeRepositoryImpl from "App/Data/Repositories/LikeRepositoryImpl";
