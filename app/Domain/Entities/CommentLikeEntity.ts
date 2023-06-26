@@ -16,9 +16,9 @@ export default class CommentLikeEntity implements BaseEntityInterface {
 
     public id: string;
 
-    public commentId:string;
+    public commentId: string;
 
-    public userId:string;
+    public userId: string;
 
     public like: boolean;
 

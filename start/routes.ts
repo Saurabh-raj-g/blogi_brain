@@ -18,11 +18,11 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from "@ioc:Adonis/Core/Route";
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.get("/", async () => {
+    return { hello: "world" };
+});
 
 //  ------ user route ------
 
@@ -45,16 +45,14 @@ Route.post("/user/updateLanguage", "UsersController.updateLanguage");
 
 //  ------ Only Admin Route For User------
 Route.get("/admin/user/findById", "Admin/ShowUserController.findById");
-Route.get("/admin/user/findByUsername", "Admin/ShowUserController.findByUsername");
+Route.get(
+    "/admin/user/findByUsername",
+    "Admin/ShowUserController.findByUsername"
+);
 Route.get("/admin/user/findByEmail", "Admin/ShowUserController.findByEmail");
 Route.get("/admin/user/search", "Admin/ShowUserController.search");
 
 Route.post("/admin/update/user/role", "AdminUsersController.updateRole");
-
-
-
-
-
 
 //  ------Post Route -> User------
 
@@ -68,5 +66,10 @@ Route.post("/admin/post/ban", "AdminPostsController.banPost");
 Route.get("/admin/post/search", "Admin/ShowAdminPostsController.search");
 Route.get("/admin/post/:id", "Admin/ShowAdminPostsController.findById");
 
-
-
+// ------Likes Post Route -> Likes ------
+Route.get("/post/like/totalLikes", "Likes/ShowController.totalLikes");
+Route.get("/post/like/totalDislikes", "Likes/ShowController.totalDislikes");
+Route.get("/post/like/status", "Likes/ShowController.postLikedStatus");
+Route.post("/post/like/createLike", "LikesController.createLike");
+Route.post("/post/like/createDislike", "LikesController.createDislike");
+Route.post("/post/like/delete", "LikesController.delete");

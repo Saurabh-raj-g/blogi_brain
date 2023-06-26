@@ -4,14 +4,14 @@ import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
 import UserUseCase from "App/Domain/UseCases/UserUseCase";
 import UtilString from "App/Utils/UtilString";
 
-export default class AdminUsersController  {
-    private userUseCase :UserUseCase;
-    private userRepository :UserRepository;
-    constructor(){
+export default class AdminUsersController {
+    private userUseCase: UserUseCase;
+    private userRepository: UserRepository;
+    constructor() {
         this.userUseCase = new UserUseCase();
-        this.userRepository = new UserRepositoryImpl()
+        this.userRepository = new UserRepositoryImpl();
     }
-    
+
     public async updateRole({ auth, request, response }) {
         await auth.use("api").check();
         if (!auth.use("api").isLoggedIn) {
@@ -27,7 +27,7 @@ export default class AdminUsersController  {
 
         const authUser = auth.use("api").user;
 
-        if(authUser.role !== UserRole.ADMIN){
+        if (authUser.role !== UserRole.ADMIN) {
             response.status(406);
             return response.send({
                 errors: [
@@ -38,9 +38,9 @@ export default class AdminUsersController  {
             });
         }
 
-        let {id, role } = request.body();
-        role = UtilString.getStringOrNull(role)
-        id = UtilString.getStringOrNull(id)
+        let { id, role } = request.body();
+        role = UtilString.getStringOrNull(role);
+        id = UtilString.getStringOrNull(id);
 
         if (role === undefined || role === null) {
             response.status(400);
@@ -77,11 +77,9 @@ export default class AdminUsersController  {
         }
 
         await this.userUseCase.updateRole(id, role);
-       
+
         return response.send({
-            result:true
+            result: true,
         });
     }
-
-   
 }

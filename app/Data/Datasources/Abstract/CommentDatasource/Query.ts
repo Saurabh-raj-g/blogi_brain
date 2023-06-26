@@ -75,5 +75,4 @@ export class Query {
             this.sort = options["sort"];
         }
     }
-
 }

@@ -11,14 +11,14 @@ import { ResultType } from "types/ResultType";
 import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
 import User from "App/Data/Models/User";
 
-export default class UsersController  {
-    private userRepository :UserRepository;
-    private userUseCase :UserUseCase;
-    constructor(){
-        this.userRepository = new UserRepositoryImpl()
+export default class UsersController {
+    private userRepository: UserRepository;
+    private userUseCase: UserUseCase;
+    constructor() {
+        this.userRepository = new UserRepositoryImpl();
         this.userUseCase = new UserUseCase();
     }
-    
+
     public async loginStatus({ auth, response }) {
         await auth.use("api").check();
 
@@ -51,13 +51,14 @@ export default class UsersController  {
             });
         }
 
-        let {fullName, username,email,password,confirmPassword } = request.body();
+        let { fullName, username, email, password, confirmPassword } =
+            request.body();
 
-        fullName = UtilString.getStringOrNull(fullName)
-        username = UtilString.getStringOrNull(username)
-        email = UtilString.getStringOrNull(email)
-        password = UtilString.getStringOrNull(password)
-        confirmPassword = UtilString.getStringOrNull(confirmPassword)
+        fullName = UtilString.getStringOrNull(fullName);
+        username = UtilString.getStringOrNull(username);
+        email = UtilString.getStringOrNull(email);
+        password = UtilString.getStringOrNull(password);
+        confirmPassword = UtilString.getStringOrNull(confirmPassword);
 
         if (fullName === undefined || fullName === null) {
             response.status(400);
@@ -114,7 +115,7 @@ export default class UsersController  {
             });
         }
 
-        if (confirmPassword !==password) {
+        if (confirmPassword !== password) {
             response.status(400);
             return response.send({
                 errors: [
@@ -127,7 +128,7 @@ export default class UsersController  {
 
         let existed = await this.userRepository.findByUsername(username);
 
-        if(existed !== null){
+        if (existed !== null) {
             response.status(400);
             return response.send({
                 errors: [
@@ -140,7 +141,7 @@ export default class UsersController  {
 
         existed = await this.userRepository.findByEmail(email);
 
-        if(existed !== null){
+        if (existed !== null) {
             response.status(400);
             return response.send({
                 errors: [
@@ -151,21 +152,21 @@ export default class UsersController  {
             });
         }
 
-       const userEntity = await this.userUseCase.create(
-        UtilString.getStringOrNull(fullName)!,
-        UtilString.getStringOrNull(username)!,
-        email,
-        password,
-        request
-       )
+        const userEntity = await this.userUseCase.create(
+            UtilString.getStringOrNull(fullName)!,
+            UtilString.getStringOrNull(username)!,
+            email,
+            password,
+            request
+        );
 
-       const token = await auth.use("api").generate(User.fromJson(userEntity.toJsonForModel()),
-            {
+        const token = await auth
+            .use("api")
+            .generate(User.fromJson(userEntity.toJsonForModel()), {
                 name: "login",
                 expiresIn: Env.get("TOKEN_EXPIRES"),
-            }
-        )         
-       
+            });
+
         const formatter = new UserFormatter();
         const userJson = formatter.toJson(userEntity!);
 
@@ -175,13 +176,13 @@ export default class UsersController  {
             tokenHash: token.tokenHash,
             expiresAt: token.expiresAt,
             user: userJson,
-        }as LoginSuccessType);
+        } as LoginSuccessType);
     }
 
     public async verifyEmail({ request, response }) {
-        let { userId,token } = request.qs();
-        userId = UtilString.getStringOrNull(userId)
-        token = UtilString.getStringOrNull(token)
+        let { userId, token } = request.qs();
+        userId = UtilString.getStringOrNull(userId);
+        token = UtilString.getStringOrNull(token);
 
         if (userId === undefined || userId === null) {
             response.status(400);
@@ -194,13 +195,12 @@ export default class UsersController  {
             });
         }
 
-        if (token ===undefined  ||token === null) {
+        if (token === undefined || token === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "token must be specified",
+                        message: "token must be specified",
                     },
                 ],
             });
@@ -218,8 +218,7 @@ export default class UsersController  {
             return response.send({ errors });
         }
 
-
-        await this.userUseCase.verifyEmail(userId,token);
+        await this.userUseCase.verifyEmail(userId, token);
 
         return response.send({
             result: true,
@@ -240,29 +239,26 @@ export default class UsersController  {
         }
 
         let { usernameOrEmail, password } = request.body();
-        usernameOrEmail = UtilString.getStringOrNull(usernameOrEmail)
-        password = UtilString.getStringOrNull(password)
+        usernameOrEmail = UtilString.getStringOrNull(usernameOrEmail);
+        password = UtilString.getStringOrNull(password);
 
-        if (usernameOrEmail ===undefined || usernameOrEmail === null ) {
+        if (usernameOrEmail === undefined || usernameOrEmail === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "username or email must be specified",
+                        message: "username or email must be specified",
                     },
                 ],
             });
         }
 
-       
-        if (password === undefined || password===null) {
+        if (password === undefined || password === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "password must be specified",
+                        message: "password must be specified",
                     },
                 ],
             });
@@ -282,12 +278,10 @@ export default class UsersController  {
             return response.send({ errors });
         }
 
-        const token = await auth.use("api").attempt(usernameOrEmail,password,
-                {
-                    name: "login",
-                    expiresIn: Env.get("TOKEN_EXPIRES"),
-                }
-        )
+        const token = await auth.use("api").attempt(usernameOrEmail, password, {
+            name: "login",
+            expiresIn: Env.get("TOKEN_EXPIRES"),
+        });
         const formatter = new UserFormatter();
         const userJson = formatter.toJson(userEntity);
         return response.send({
@@ -295,7 +289,7 @@ export default class UsersController  {
             token: token.token,
             tokenHash: token.tokenHash,
             expiresAt: token.expiresAt,
-            user: userJson
+            user: userJson,
         } as LoginSuccessType);
     }
 
@@ -332,14 +326,13 @@ export default class UsersController  {
         }
 
         let { usernameOrEmail } = request.body();
-        usernameOrEmail = UtilString.getStringOrNull(usernameOrEmail)
-        if (usernameOrEmail ===undefined || usernameOrEmail === null ) {
+        usernameOrEmail = UtilString.getStringOrNull(usernameOrEmail);
+        if (usernameOrEmail === undefined || usernameOrEmail === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "username or email must be specified",
+                        message: "username or email must be specified",
                     },
                 ],
             });
@@ -359,14 +352,14 @@ export default class UsersController  {
             return response.send({ errors });
         }
 
-        await this.userUseCase.sendResetPasswordToken(userEntity.id,request)
-        
+        await this.userUseCase.sendResetPasswordToken(userEntity.id, request);
+
         return response.send({
-            result:true
+            result: true,
         });
     }
-   // after calling forgotPassword 
-   // call this to reset password
+    // after calling forgotPassword
+    // call this to reset password
     public async resetPassword({ auth, request, response }) {
         await auth.use("api").check();
         if (auth.use("api").isLoggedIn) {
@@ -380,55 +373,51 @@ export default class UsersController  {
             });
         }
 
-        let {token, username,password, confirmPassword} = request.body();
-        token = UtilString.getStringOrNull(token)
-        username = UtilString.getStringOrNull(username)
-        password = UtilString.getStringOrNull(password)
-        confirmPassword = UtilString.getStringOrNull(confirmPassword)
+        let { token, username, password, confirmPassword } = request.body();
+        token = UtilString.getStringOrNull(token);
+        username = UtilString.getStringOrNull(username);
+        password = UtilString.getStringOrNull(password);
+        confirmPassword = UtilString.getStringOrNull(confirmPassword);
 
-        if (token ===undefined  ||token === null) {
+        if (token === undefined || token === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "token must be specified",
+                        message: "token must be specified",
                     },
                 ],
             });
         }
 
-        if (username ===undefined  ||username === null) {
+        if (username === undefined || username === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "username must be specified",
+                        message: "username must be specified",
                     },
                 ],
             });
         }
 
-        if (password ===undefined  ||password === null) {
+        if (password === undefined || password === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "password must be specified",
+                        message: "password must be specified",
                     },
                 ],
             });
         }
 
-        if (confirmPassword ===undefined  ||confirmPassword === null) {
+        if (confirmPassword === undefined || confirmPassword === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "confirmPassword must be specified",
+                        message: "confirmPassword must be specified",
                     },
                 ],
             });
@@ -439,13 +428,11 @@ export default class UsersController  {
             return response.send({
                 errors: [
                     {
-                        message:
-                            "password does not matched",
+                        message: "password does not matched",
                     },
                 ],
             });
         }
-
 
         const userEntity = await this.userRepository.findByUsername(username);
 
@@ -459,10 +446,10 @@ export default class UsersController  {
             return response.send({ errors });
         }
 
-        await this.userUseCase.resetPassword(userEntity.id,token,password)
-        
+        await this.userUseCase.resetPassword(userEntity.id, token, password);
+
         return response.send({
-            result:true
+            result: true,
         });
     }
 
@@ -479,29 +466,27 @@ export default class UsersController  {
             });
         }
 
-        let {password, confirmPassword} = request.body();
-        password = UtilString.getStringOrNull(password)
-        confirmPassword = UtilString.getStringOrNull(confirmPassword)
+        let { password, confirmPassword } = request.body();
+        password = UtilString.getStringOrNull(password);
+        confirmPassword = UtilString.getStringOrNull(confirmPassword);
 
-        if (password ===undefined  ||password === null) {
+        if (password === undefined || password === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "password must be specified",
+                        message: "password must be specified",
                     },
                 ],
             });
         }
 
-        if (confirmPassword ===undefined  ||confirmPassword === null) {
+        if (confirmPassword === undefined || confirmPassword === null) {
             response.status(400);
             return response.send({
                 errors: [
                     {
-                        message:
-                            "confirmPassword must be specified",
+                        message: "confirmPassword must be specified",
                     },
                 ],
             });
@@ -512,8 +497,7 @@ export default class UsersController  {
             return response.send({
                 errors: [
                     {
-                        message:
-                            "password does not matched",
+                        message: "password does not matched",
                     },
                 ],
             });
@@ -521,16 +505,16 @@ export default class UsersController  {
 
         const authUser = auth.use("api").user;
 
-        await this.userUseCase.updatePassword(authUser.id,password)
-        
+        await this.userUseCase.updatePassword(authUser.id, password);
+
         return response.send({
-            result:true
+            result: true,
         });
     }
 
     public async isUsernameAvailable({ auth, request, response }) {
         let { username } = request.qs();
-        username = UtilString.getStringOrNull(username)
+        username = UtilString.getStringOrNull(username);
 
         if (username === undefined || username === null) {
             response.status(400);
@@ -573,7 +557,7 @@ export default class UsersController  {
 
     public async isEmailAvailable({ auth, request, response }) {
         let { email } = request.qs();
-        email = UtilString.getStringOrNull(email)
+        email = UtilString.getStringOrNull(email);
 
         if (email === undefined || email === null) {
             response.status(400);
@@ -629,14 +613,10 @@ export default class UsersController  {
 
         const authUser = auth.use("api").user;
 
-        let {
-            username,
-            title,
-            description,
-        } = request.body();
-        username = UtilString.getStringOrNull(username)
-        title = UtilString.getStringOrNull(title)
-        description = UtilString.getStringOrNull(description)
+        let { username, title, description } = request.body();
+        username = UtilString.getStringOrNull(username);
+        title = UtilString.getStringOrNull(title);
+        description = UtilString.getStringOrNull(description);
         if (username === undefined || username === null || username === "") {
             response.status(400);
             return response.send({
@@ -663,11 +643,11 @@ export default class UsersController  {
             authUser.id,
             username,
             title,
-           description,
+            description
         );
-    
+
         return response.send({
-            result:true
+            result: true,
         });
     }
 
@@ -686,25 +666,22 @@ export default class UsersController  {
 
         const authUser = auth.use("api").user;
 
-        const image: MultipartFileContract = request.file(
-            "avatar",
-            {
-                size: "1mb",
-                extnames: [
-                    "jpg",
-                    "jpeg",
-                    "png",
-                    "gif",
-                    "svg",
-                    "webp",
-                    "tif",
-                    "heic",
-                    "avif",
-                ]
-            }
-        )
+        const image: MultipartFileContract = request.file("avatar", {
+            size: "1mb",
+            extnames: [
+                "jpg",
+                "jpeg",
+                "png",
+                "gif",
+                "svg",
+                "webp",
+                "tif",
+                "heic",
+                "avif",
+            ],
+        });
 
-        if(!image){
+        if (!image) {
             response.status(400);
             const errors = [{ message: "File has not been submitted" }];
             return response.send({ errors });
@@ -720,12 +697,11 @@ export default class UsersController  {
         if (!image.isValid) {
             response.status(400);
             return response.send({
-                errors: [{ message: image.errors}] ,
+                errors: [{ message: image.errors }],
             });
         }
 
         //const buffer = fs.readFileSync(image.tmpPath);
-        
 
         await this.userUseCase.updateAvatar(authUser.id, image);
 
@@ -733,7 +709,7 @@ export default class UsersController  {
             result: true,
         });
     }
-    
+
     public async changeEmailRequest({ auth, request, response }) {
         await auth.use("api").check();
         if (!auth.use("api").isLoggedIn) {
@@ -750,7 +726,7 @@ export default class UsersController  {
         const authUser = auth.use("api").user;
 
         let { email } = request.body();
-        email = UtilString.getStringOrNull(email)
+        email = UtilString.getStringOrNull(email);
 
         if (email === undefined || email === null) {
             response.status(400);
@@ -763,7 +739,7 @@ export default class UsersController  {
             });
         }
 
-        await this.userUseCase.changeEmailRequest(authUser.id, email,request);
+        await this.userUseCase.changeEmailRequest(authUser.id, email, request);
 
         return response.send({
             result: true,
@@ -786,7 +762,7 @@ export default class UsersController  {
         const authUser = auth.use("api").user;
 
         let { language } = request.body();
-        language = UtilString.getStringOrNull(language)
+        language = UtilString.getStringOrNull(language);
 
         if (language === undefined || language === null) {
             response.status(400);
@@ -810,11 +786,11 @@ export default class UsersController  {
                 ],
             });
         }
-        
+
         await this.userUseCase.updateLanguage(authUser.id, objLanguage);
-       
+
         return response.send({
-            result:true
+            result: true,
         });
     }
 }

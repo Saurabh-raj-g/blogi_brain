@@ -5,7 +5,9 @@ import CommentLikeDatasource from "../Datasources/Abstract/CommentLikeDatasource
 import CommentLikeLocalDatasourceImpl from "../Datasources/Local/CommentLikeLocalDatasource";
 import CommentLike from "../Models/CommentLike";
 
-export default class CommentLikeRepositoryImpl implements CommentLikeRepository {
+export default class CommentLikeRepositoryImpl
+    implements CommentLikeRepository
+{
     private commentLikeDatasource: CommentLikeDatasource;
 
     constructor() {
@@ -22,7 +24,9 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
                 resolve(null);
             });
         }
-        const commentLikeEntity = CommentLikeEntity.fromJson(commentLike.toJsonForEntity());  
+        const commentLikeEntity = CommentLikeEntity.fromJson(
+            commentLike.toJsonForEntity()
+        );
         return new Promise((resolve) => {
             resolve(commentLikeEntity);
         });
@@ -49,9 +53,11 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
     async findByUserId(
         userId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<CommentLikeEntity[] > {
-        const commentLikes = await this.commentLikeDatasource.findByUserId(userId);
-        
+    ): Promise<CommentLikeEntity[]> {
+        const commentLikes = await this.commentLikeDatasource.findByUserId(
+            userId
+        );
+
         if (commentLikes.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -60,7 +66,7 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
         const commentLikeEntities = commentLikes.map((commentLike) => {
             return CommentLikeEntity.fromJson(commentLike.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(commentLikeEntities);
         });
@@ -69,9 +75,11 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
     async findByCommentId(
         commentId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<CommentLikeEntity[] > {
-        const commentLikes = await this.commentLikeDatasource.findByPostId(commentId);
-        
+    ): Promise<CommentLikeEntity[]> {
+        const commentLikes = await this.commentLikeDatasource.findByPostId(
+            commentId
+        );
+
         if (commentLikes.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -80,12 +88,12 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
         const commentLikeEntities = commentLikes.map((commentLike) => {
             return CommentLikeEntity.fromJson(commentLike.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(commentLikeEntities);
         });
     }
-   
+
     existsById(id: string): Promise<boolean> {
         return this.commentLikeDatasource.existsById(id);
     }
@@ -94,7 +102,9 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
         commentLikeEntity: CommentLikeEntity,
         _?: { [key: string]: any } | undefined
     ): Promise<CommentLikeEntity | null> {
-        const commentLike = CommentLike.fromJson(commentLikeEntity.toJsonForModel());
+        const commentLike = CommentLike.fromJson(
+            commentLikeEntity.toJsonForModel()
+        );
         const saved = await this.commentLikeDatasource.save(commentLike);
         if (saved === null) {
             return new Promise((resolve) => {
@@ -102,7 +112,7 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
             });
         }
         const savedEntity = CommentLikeEntity.fromJson(saved.toJsonForEntity());
-        
+
         return new Promise((resolve) => {
             resolve(savedEntity);
         });
@@ -116,7 +126,7 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
         if (entity === null) {
             throw new Error(`Not found post ID:${commentLikeEntity.id}`);
         }
-      
+
         const updatedEntity = await this.save(entity);
 
         return new Promise((resolve) => {
@@ -144,7 +154,9 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
         _?: { [key: string]: any } | undefined
     ): Promise<CommentLikeEntity[]> {
         const datasourceQuery = query.toDatasourceQuery();
-        const commentLikes = await this.commentLikeDatasource.search(datasourceQuery);
+        const commentLikes = await this.commentLikeDatasource.search(
+            datasourceQuery
+        );
         if (commentLikes.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -153,7 +165,7 @@ export default class CommentLikeRepositoryImpl implements CommentLikeRepository 
         const commentLikeEntities = commentLikes.map((commentLike) => {
             return CommentLikeEntity.fromJson(commentLike.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(commentLikeEntities);
         });

@@ -2,10 +2,7 @@ import Post from "App/Data/Models/Post";
 import { Query } from "App/Data/Datasources/Abstract/PostDatasource/Query";
 
 export default abstract class PostDatasource {
-    public static sortColumns = [
-        "created_at",
-        "updated_at",
-    ];
+    public static sortColumns = ["created_at", "updated_at"];
 
     abstract findById(
         id: string,

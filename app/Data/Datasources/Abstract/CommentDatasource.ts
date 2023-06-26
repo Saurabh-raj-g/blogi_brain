@@ -1,11 +1,8 @@
 import Comment from "App/Data/Models/Comment";
-import {Query} from "App/Data/Datasources/Abstract/CommentDatasource/Query";
+import { Query } from "App/Data/Datasources/Abstract/CommentDatasource/Query";
 
 export default abstract class CommentDatasource {
-    public static sortColumns = [
-        "created_at",
-        "updated_at",
-    ];
+    public static sortColumns = ["created_at", "updated_at"];
 
     abstract findById(
         id: string,

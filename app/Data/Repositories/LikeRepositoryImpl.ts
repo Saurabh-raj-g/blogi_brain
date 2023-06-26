@@ -22,7 +22,7 @@ export default class LikeRepositoryImpl implements LikeRepository {
                 resolve(null);
             });
         }
-        const likeEntity = LikeEntity.fromJson(like.toJsonForEntity());  
+        const likeEntity = LikeEntity.fromJson(like.toJsonForEntity());
         return new Promise((resolve) => {
             resolve(likeEntity);
         });
@@ -49,9 +49,9 @@ export default class LikeRepositoryImpl implements LikeRepository {
     async findByUserId(
         userId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<LikeEntity[] > {
+    ): Promise<LikeEntity[]> {
         const likes = await this.likeDatasource.findByUserId(userId);
-        
+
         if (likes.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -60,7 +60,7 @@ export default class LikeRepositoryImpl implements LikeRepository {
         const likeEntities = likes.map((like) => {
             return LikeEntity.fromJson(like.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(likeEntities);
         });
@@ -69,9 +69,9 @@ export default class LikeRepositoryImpl implements LikeRepository {
     async findByPostId(
         postId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<LikeEntity[] > {
+    ): Promise<LikeEntity[]> {
         const likes = await this.likeDatasource.findByPostId(postId);
-        
+
         if (likes.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -80,12 +80,12 @@ export default class LikeRepositoryImpl implements LikeRepository {
         const likeEntities = likes.map((like) => {
             return LikeEntity.fromJson(like.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(likeEntities);
         });
     }
-   
+
     existsById(id: string): Promise<boolean> {
         return this.likeDatasource.existsById(id);
     }
@@ -102,7 +102,7 @@ export default class LikeRepositoryImpl implements LikeRepository {
             });
         }
         const savedEntity = LikeEntity.fromJson(saved.toJsonForEntity());
-        
+
         return new Promise((resolve) => {
             resolve(savedEntity);
         });
@@ -116,8 +116,8 @@ export default class LikeRepositoryImpl implements LikeRepository {
         if (entity === null) {
             throw new Error(`Not found post ID:${likeEntity.id}`);
         }
-      
-        const updatedEntity = await this.save(entity);
+
+        const updatedEntity = await this.save(likeEntity);
 
         return new Promise((resolve) => {
             resolve(updatedEntity!);
@@ -153,7 +153,7 @@ export default class LikeRepositoryImpl implements LikeRepository {
         const likeEntities = likes.map((like) => {
             return LikeEntity.fromJson(like.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(likeEntities);
         });
@@ -162,5 +162,4 @@ export default class LikeRepositoryImpl implements LikeRepository {
     deleteById(id: string): Promise<void> {
         return this.likeDatasource.deleteById(id);
     }
-
 }

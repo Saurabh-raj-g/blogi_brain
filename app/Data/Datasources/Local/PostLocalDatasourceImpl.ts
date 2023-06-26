@@ -5,7 +5,6 @@ import PostDatasource from "../Abstract/PostDatasource";
 import OrderExtractor from "./OrderExtractor";
 import Order from "./OrderExtractor/Order";
 
-
 export default class PostLocalDatasourceImpl implements PostDatasource {
     findById(
         id: string,
@@ -87,7 +86,7 @@ export default class PostLocalDatasourceImpl implements PostDatasource {
 
     private async resolveEntities(query: Query): Promise<Post[]> {
         const queryBuilder = Post.query();
-        
+
         await this.appendConditionsToQueryBuilder(queryBuilder, query);
 
         queryBuilder.offset(query.offset);
@@ -118,9 +117,7 @@ export default class PostLocalDatasourceImpl implements PostDatasource {
         const title = query.title;
         const body = query.body;
         const status = query.status;
-    
 
-       
         const minCreatedAt = query.minCreatedAt;
         const maxCreatedAt = query.maxCreatedAt;
         const minUpadtedAt = query.minUpdatedAt;
@@ -146,17 +143,17 @@ export default class PostLocalDatasourceImpl implements PostDatasource {
             queryBuilder.where("user_id", userId);
         }
         if (title !== null) {
-            queryBuilder.where("title","LIKE", `%${title}%` );
+            queryBuilder.where("title", "LIKE", `%${title}%`);
         }
-        
+
         if (body !== null) {
             queryBuilder.where("body", "LIKE", `%${body}%`);
         }
-       
+
         if (status !== null) {
             queryBuilder.where("status", status);
         }
-        
+
         if (minCreatedAt !== null) {
             queryBuilder.where("created_at", ">=", minCreatedAt.toISO());
         }

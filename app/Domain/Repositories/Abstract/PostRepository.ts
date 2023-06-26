@@ -22,7 +22,7 @@ export default abstract class PostRepository {
     abstract update(
         postId: string,
         title: string,
-        body: JSON,
+        body: JSON
     ): Promise<PostEntity>;
     abstract totalCount(query: Query): Promise<number>;
     abstract search(

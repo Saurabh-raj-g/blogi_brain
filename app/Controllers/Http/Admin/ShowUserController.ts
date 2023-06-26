@@ -5,11 +5,10 @@ import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
 import { Query } from "App/Domain/Repositories/Abstract/UserRepository/Query";
 import UtilString from "App/Utils/UtilString";
 
-export default class ShowUserController  {
-    private userRepository :UserRepository;
-    constructor(){
-        this.userRepository = new UserRepositoryImpl()
-      
+export default class ShowUserController {
+    private userRepository: UserRepository;
+    constructor() {
+        this.userRepository = new UserRepositoryImpl();
     }
 
     public async findById({ auth, request, response }) {
@@ -27,7 +26,7 @@ export default class ShowUserController  {
 
         const authUser = auth.use("api").user;
 
-        if(authUser.role !== UserRole.ADMIN){
+        if (authUser.role !== UserRole.ADMIN) {
             response.status(406);
             return response.send({
                 errors: [
@@ -38,7 +37,7 @@ export default class ShowUserController  {
             });
         }
         let { id } = request.qs();
-        id = UtilString.getStringOrNull(id)
+        id = UtilString.getStringOrNull(id);
 
         if (id === undefined || id === null) {
             response.status(400);
@@ -86,7 +85,7 @@ export default class ShowUserController  {
 
         const authUser = auth.use("api").user;
 
-        if(authUser.role !== UserRole.ADMIN){
+        if (authUser.role !== UserRole.ADMIN) {
             response.status(406);
             return response.send({
                 errors: [
@@ -97,7 +96,7 @@ export default class ShowUserController  {
             });
         }
         let { username } = request.qs();
-        username = UtilString.getStringOrNull(username)
+        username = UtilString.getStringOrNull(username);
 
         if (username === undefined || username === null) {
             response.status(400);
@@ -145,7 +144,7 @@ export default class ShowUserController  {
 
         const authUser = auth.use("api").user;
 
-        if(authUser.role !== UserRole.ADMIN){
+        if (authUser.role !== UserRole.ADMIN) {
             response.status(406);
             return response.send({
                 errors: [
@@ -204,7 +203,7 @@ export default class ShowUserController  {
 
         const authUser = auth.use("api").user;
 
-        if(authUser.role !== UserRole.ADMIN){
+        if (authUser.role !== UserRole.ADMIN) {
             response.status(406);
             return response.send({
                 errors: [
@@ -214,18 +213,16 @@ export default class ShowUserController  {
                 ],
             });
         }
-        
-        const params = request.qs()
-        const keys = Object.keys(params)
+
+        const params = request.qs();
+        const keys = Object.keys(params);
         const query = new Query();
-        
-        for(let i=0;i<keys.length; i++){
-            query[keys[i]] = params[keys[i]]
-          
+
+        for (let i = 0; i < keys.length; i++) {
+            query[keys[i]] = params[keys[i]];
         }
         const userEntities = await this.userRepository.search(query);
 
-       
         if (userEntities === null || userEntities.length === 0) {
             response.status(404);
             return response.send({
@@ -238,14 +235,14 @@ export default class ShowUserController  {
         }
 
         const formatter = new UserFormatter();
-        const userJsons = userEntities.map((userEntity) => {return formatter.toJson(userEntity)});
+        const userJsons = userEntities.map((userEntity) => {
+            return formatter.toJson(userEntity);
+        });
 
         return response.send({
             users: userJsons,
         });
     }
-
-
 }
 
 /*

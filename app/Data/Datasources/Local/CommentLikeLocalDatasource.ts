@@ -5,8 +5,9 @@ import CommentLikeDatasource from "../Abstract/CommentLikeDatasource";
 import OrderExtractor from "./OrderExtractor";
 import Order from "./OrderExtractor/Order";
 
-
-export default class CommentLikeLocalDatasourceImpl implements CommentLikeDatasource {
+export default class CommentLikeLocalDatasourceImpl
+    implements CommentLikeDatasource
+{
     findById(
         id: string,
         _?: { [key: string]: any } | undefined
@@ -99,7 +100,7 @@ export default class CommentLikeLocalDatasourceImpl implements CommentLikeDataso
 
     private async resolveEntities(query: Query): Promise<CommentLike[]> {
         const queryBuilder = CommentLike.query();
-        
+
         await this.appendConditionsToQueryBuilder(queryBuilder, query);
 
         queryBuilder.offset(query.offset);
@@ -132,7 +133,7 @@ export default class CommentLikeLocalDatasourceImpl implements CommentLikeDataso
         const notCommentIds = query.notCommentIds;
         const like = query.like;
         const dislike = query.dislike;
-       
+
         const minCreatedAt = query.minCreatedAt;
         const maxCreatedAt = query.maxCreatedAt;
         const minUpadtedAt = query.minUpdatedAt;

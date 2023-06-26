@@ -5,7 +5,6 @@ import LikeDatasource from "../Abstract/LikeDatasource";
 import OrderExtractor from "./OrderExtractor";
 import Order from "./OrderExtractor/Order";
 
-
 export default class LikeLocalDatasourceImpl implements LikeDatasource {
     findById(
         id: string,
@@ -33,11 +32,17 @@ export default class LikeLocalDatasourceImpl implements LikeDatasource {
         return Like.query().where("user_id", userId);
     }
 
-    findByPostId(postId: string, _?: { [key: string]: any; } | undefined): Promise<Like[]> {
+    findByPostId(
+        postId: string,
+        _?: { [key: string]: any } | undefined
+    ): Promise<Like[]> {
         return Like.query().where("post_id", postId);
     }
 
-    findByPostIds(postIds: string[], _?: { [key: string]: any; } | undefined): Promise<Like[]> {
+    findByPostIds(
+        postIds: string[],
+        _?: { [key: string]: any } | undefined
+    ): Promise<Like[]> {
         if (postIds.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -108,7 +113,7 @@ export default class LikeLocalDatasourceImpl implements LikeDatasource {
 
     private async resolveEntities(query: Query): Promise<Like[]> {
         const queryBuilder = Like.query();
-        
+
         await this.appendConditionsToQueryBuilder(queryBuilder, query);
 
         queryBuilder.offset(query.offset);
@@ -141,7 +146,7 @@ export default class LikeLocalDatasourceImpl implements LikeDatasource {
         const notPostIds = query.notPostIds;
         const like = query.like;
         const dislike = query.dislike;
-       
+
         const minCreatedAt = query.minCreatedAt;
         const maxCreatedAt = query.maxCreatedAt;
         const minUpadtedAt = query.minUpdatedAt;

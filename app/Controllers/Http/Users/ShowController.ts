@@ -2,11 +2,10 @@ import { DefaultViewFormatter as UserFormatter } from "App/Controllers/ViewForma
 import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
 import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
 
-export default class ShowController  {
-    private userRepository :UserRepository;
-    constructor(){
-        this.userRepository = new UserRepositoryImpl()
-      
+export default class ShowController {
+    private userRepository: UserRepository;
+    constructor() {
+        this.userRepository = new UserRepositoryImpl();
     }
     public async me({ auth, response }) {
         await auth.use("api").check();
@@ -42,6 +41,4 @@ export default class ShowController  {
             user: userJson,
         });
     }
-
-   
 }

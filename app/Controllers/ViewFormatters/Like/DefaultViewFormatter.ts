@@ -10,6 +10,6 @@ export class DefaultViewFormatter {
             dislike: likeEntity.dislike,
             createdAt: likeEntity.createdAt.toISO()!,
             updatedAt: likeEntity.updatedAt.toISO()!,
-        }
+        };
     }
 }

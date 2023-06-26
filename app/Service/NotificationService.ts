@@ -5,7 +5,6 @@ import NotificationEvent from "./NotificationService/NotificationEvent";
 import ChangeEmailRequestSender from "./NotificationService/Sender/ChangeEmailRequestSender";
 
 export default class NotificationService {
-   
     public static async send(
         event: NotificationEvent,
         options: { [key: string]: any } = {}
@@ -25,7 +24,7 @@ export default class NotificationService {
         }
 
         if (sender === null) {
-            throw new Error("sender could not recognized")
+            throw new Error("sender could not recognized");
         }
 
         await sender.send(options);

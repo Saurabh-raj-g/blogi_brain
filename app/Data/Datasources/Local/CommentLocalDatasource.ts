@@ -5,7 +5,6 @@ import CommentDatasource from "../Abstract/CommentDatasource";
 import OrderExtractor from "./OrderExtractor";
 import Order from "./OrderExtractor/Order";
 
-
 export default class CommentLocalDatasourceImpl implements CommentDatasource {
     findById(
         id: string,
@@ -33,7 +32,10 @@ export default class CommentLocalDatasourceImpl implements CommentDatasource {
         return Comment.query().where("user_id", userId);
     }
 
-    findByPostId(postId: string, _?: { [key: string]: any; } | undefined): Promise<Comment[]> {
+    findByPostId(
+        postId: string,
+        _?: { [key: string]: any } | undefined
+    ): Promise<Comment[]> {
         return Comment.query().where("post_id", postId);
     }
 
@@ -91,7 +93,7 @@ export default class CommentLocalDatasourceImpl implements CommentDatasource {
 
     private async resolveEntities(query: Query): Promise<Comment[]> {
         const queryBuilder = Comment.query();
-        
+
         await this.appendConditionsToQueryBuilder(queryBuilder, query);
 
         queryBuilder.offset(query.offset);
@@ -123,7 +125,7 @@ export default class CommentLocalDatasourceImpl implements CommentDatasource {
         const postIds = query.postIds;
         const notPostIds = query.notPostIds;
         const comment = query.comment;
-       
+
         const minCreatedAt = query.minCreatedAt;
         const maxCreatedAt = query.maxCreatedAt;
         const minUpadtedAt = query.minUpdatedAt;

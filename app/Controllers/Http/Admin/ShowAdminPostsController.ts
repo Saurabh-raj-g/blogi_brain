@@ -5,13 +5,12 @@ import PostRepositoryImpl from "App/Data/Repositories/PostRepositoryImpl";
 import PostRepository from "App/Domain/Repositories/Abstract/PostRepository";
 import { Query } from "App/Domain/Repositories/Abstract/PostRepository/Query";
 
-export default class ShowController  {
-    private postRepository :PostRepository;
-    constructor(){
-        this.postRepository = new PostRepositoryImpl()
-      
+export default class ShowController {
+    private postRepository: PostRepository;
+    constructor() {
+        this.postRepository = new PostRepositoryImpl();
     }
-    public async findById({auth, params, response }) {
+    public async findById({ auth, params, response }) {
         await auth.use("api").check();
         if (!auth.use("api").isLoggedIn) {
             response.status(401);
@@ -71,7 +70,7 @@ export default class ShowController  {
         });
     }
 
-    public async search({auth, request, response }) {
+    public async search({ auth, request, response }) {
         await auth.use("api").check();
         if (!auth.use("api").isLoggedIn) {
             response.status(401);
@@ -97,24 +96,23 @@ export default class ShowController  {
             });
         }
 
-       const params = request.qs()
-       const keys = Object.keys(params)
+        const params = request.qs();
+        const keys = Object.keys(params);
         const query = new Query();
 
-        for(let i=0;i<keys.length; i++){
-            query[keys[i]] = params[keys[i]]
+        for (let i = 0; i < keys.length; i++) {
+            query[keys[i]] = params[keys[i]];
         }
 
         const postEntities = await this.postRepository.search(query);
         const formatter = new PostFormatter();
-        
+
         const postJsons = postEntities.map((postEntity) => {
-            return formatter.toJson(postEntity)
+            return formatter.toJson(postEntity);
         });
 
         return response.send({
             posts: postJsons,
         });
     }
-   
 }

@@ -4,7 +4,9 @@ import { PostStatus } from "App/Data/Enums/Post";
 
 export default class PostEntity implements BaseEntityInterface {
     public static fromJson(json: { [key: string]: any }): PostEntity {
-        const readTimeType = PostReadTimeType.fromName<PostReadTimeType>(json.readTimeType);
+        const readTimeType = PostReadTimeType.fromName<PostReadTimeType>(
+            json.readTimeType
+        );
         if (readTimeType.isUnknown()) {
             throw new Error(`readTimeType is invalid: ${json.readTimeType}`);
         }
@@ -25,7 +27,7 @@ export default class PostEntity implements BaseEntityInterface {
 
     public id: string;
 
-    public userId:string;
+    public userId: string;
 
     public readTime: Number | null;
 
@@ -46,7 +48,8 @@ export default class PostEntity implements BaseEntityInterface {
             id: this.id,
             userId: this.userId,
             readTime: this.readTime,
-            readTimeType: this.readTimeType !==null ? this.readTimeType.getName() : null,
+            readTimeType:
+                this.readTimeType !== null ? this.readTimeType.getName() : null,
             title: this.title,
             status: this.status,
             body: this.body,

@@ -42,7 +42,7 @@ export default class TextGenerator {
         language: Language,
         options: { [key: string]: any }
     ): Promise<string | void> {
-        const { user,request,token} = options;
+        const { user, request, token } = options;
 
         if (user === undefined) {
             return new Promise((resolve) => {
@@ -51,13 +51,12 @@ export default class TextGenerator {
         }
 
         const userFormatter = new UserFormatter();
-        const userJson = userFormatter.toJson(user,token, language,request);
+        const userJson = userFormatter.toJson(user, token, language, request);
 
-       
         const text = await Eta.renderFile(
             `./${language.getName()}/text/email_verification.eta`,
             {
-                user: userJson
+                user: userJson,
             }
         );
         return new Promise((resolve) => {
@@ -69,22 +68,21 @@ export default class TextGenerator {
         language: Language,
         options: { [key: string]: any }
     ): Promise<string | void> {
-        const { user,request,token} = options;
+        const { user, request, token } = options;
 
-        if (user === undefined ) {
+        if (user === undefined) {
             return new Promise((resolve) => {
                 resolve("");
             });
         }
 
         const userFormatter = new UserFormatter();
-        const userJson = userFormatter.toJson(user,token, language,request);
+        const userJson = userFormatter.toJson(user, token, language, request);
 
-       
         const text = await Eta.renderFile(
             `./${language.getName()}/text/reset_password.eta`,
             {
-                user: userJson
+                user: userJson,
             }
         );
         return new Promise((resolve) => {
@@ -96,22 +94,21 @@ export default class TextGenerator {
         language: Language,
         options: { [key: string]: any }
     ): Promise<string | void> {
-        const { user,request,token} = options;
+        const { user, request, token } = options;
 
-        if (user === undefined ) {
+        if (user === undefined) {
             return new Promise((resolve) => {
                 resolve("");
             });
         }
 
         const userFormatter = new UserFormatter();
-        const userJson = userFormatter.toJson(user,token, language,request);
+        const userJson = userFormatter.toJson(user, token, language, request);
 
-       
         const text = await Eta.renderFile(
             `./${language.getName()}/text/change_email_request.eta`,
             {
-                user: userJson
+                user: userJson,
             }
         );
         return new Promise((resolve) => {

@@ -22,7 +22,7 @@ export default class CommentRepositoryImpl implements CommentRepository {
                 resolve(null);
             });
         }
-        const commentEntity = CommentEntity.fromJson(comment.toJsonForEntity());  
+        const commentEntity = CommentEntity.fromJson(comment.toJsonForEntity());
         return new Promise((resolve) => {
             resolve(commentEntity);
         });
@@ -49,9 +49,9 @@ export default class CommentRepositoryImpl implements CommentRepository {
     async findByUserId(
         userId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<CommentEntity[] > {
+    ): Promise<CommentEntity[]> {
         const comments = await this.commentDatasource.findByUserId(userId);
-        
+
         if (comments.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -60,7 +60,7 @@ export default class CommentRepositoryImpl implements CommentRepository {
         const commentEntities = comments.map((comment) => {
             return CommentEntity.fromJson(comment.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(commentEntities);
         });
@@ -69,9 +69,9 @@ export default class CommentRepositoryImpl implements CommentRepository {
     async findByPostId(
         postId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<CommentEntity[] > {
+    ): Promise<CommentEntity[]> {
         const comments = await this.commentDatasource.findByPostId(postId);
-        
+
         if (comments.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -80,12 +80,12 @@ export default class CommentRepositoryImpl implements CommentRepository {
         const commentEntities = comments.map((comment) => {
             return CommentEntity.fromJson(comment.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(commentEntities);
         });
     }
-   
+
     existsById(id: string): Promise<boolean> {
         return this.commentDatasource.existsById(id);
     }
@@ -102,7 +102,7 @@ export default class CommentRepositoryImpl implements CommentRepository {
             });
         }
         const savedEntity = CommentEntity.fromJson(saved.toJsonForEntity());
-        
+
         return new Promise((resolve) => {
             resolve(savedEntity);
         });
@@ -116,7 +116,7 @@ export default class CommentRepositoryImpl implements CommentRepository {
         if (entity === null) {
             throw new Error(`Not found post ID:${commentEntity.id}`);
         }
-      
+
         const updatedEntity = await this.save(entity);
 
         return new Promise((resolve) => {
@@ -143,7 +143,7 @@ export default class CommentRepositoryImpl implements CommentRepository {
         const commentEntities = comments.map((comment) => {
             return CommentEntity.fromJson(comment.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(commentEntities);
         });
@@ -152,5 +152,4 @@ export default class CommentRepositoryImpl implements CommentRepository {
     deleteById(id: string): Promise<void> {
         return this.commentDatasource.deleteById(id);
     }
-
 }

@@ -5,5 +5,5 @@ export type LoginSuccessType = {
     token: string;
     tokenHash: string;
     expiresAt: string;
-    user: UserType
+    user: UserType;
 };

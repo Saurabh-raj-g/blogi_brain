@@ -1,4 +1,4 @@
-import CommentEntity from "App/Domain/Entities/CommentEntity"
+import CommentEntity from "App/Domain/Entities/CommentEntity";
 
 export class DefaultViewFormatter {
     public toJson(commentEntity: CommentEntity): any {
@@ -9,6 +9,6 @@ export class DefaultViewFormatter {
             comment: commentEntity.comment,
             createdAt: commentEntity.createdAt.toISO()!,
             updatedAt: commentEntity.updatedAt.toISO()!,
-        }
+        };
     }
 }

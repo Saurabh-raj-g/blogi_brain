@@ -2,9 +2,7 @@ import PostEntity from "App/Domain/Entities/PostEntity";
 import { PostType } from "types/PostType";
 
 export class DefaultViewFormatter {
-
     public toJson(postEntity: PostEntity): PostType {
-     
         return {
             id: postEntity.id,
             userId: postEntity.userId,

@@ -3,11 +3,11 @@ import { PostReadTimeType } from "App/ValueObjects/PostReadTimeType";
 
 export type PostType = {
     id: string;
-    userId:string;
-    readTime: Number | null;
+    userId: string;
+    readTime: number | null;
     readTimeType: PostReadTimeType | null;
     title: string;
-    status:PostStatus;
+    status: PostStatus;
     body: JSON;
     createdAt: string;
     updatedAt: string;

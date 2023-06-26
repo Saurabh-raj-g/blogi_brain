@@ -5,7 +5,6 @@ export default class KeywordManager {
     private static instance: KeywordManager;
 
     private enJson: { [key: string]: string };
-    
 
     public static getInstance(): KeywordManager {
         if (KeywordManager.instance !== undefined) {
@@ -17,7 +16,6 @@ export default class KeywordManager {
 
     constructor() {
         this.enJson = require(`${Application.appRoot}/json/keywords_en.json`);
-        
     }
 
     public get(language: Language, key: string): string {

@@ -2,7 +2,7 @@ import PostEntity from "App/Domain/Entities/PostEntity";
 import PostRepository from "App/Domain/Repositories/Abstract/PostRepository";
 import { Query } from "App/Domain/Repositories/Abstract/PostRepository/Query";
 import PostDatasource from "App/Data/Datasources/Abstract/PostDatasource";
-import PostDatasourceImpl  from "App/Data/Datasources/Local/PostLocalDatasourceImpl";
+import PostDatasourceImpl from "App/Data/Datasources/Local/PostLocalDatasourceImpl";
 import Post from "../Models/Post";
 
 export default class PostRepositoryImpl implements PostRepository {
@@ -22,7 +22,7 @@ export default class PostRepositoryImpl implements PostRepository {
                 resolve(null);
             });
         }
-        const postEntity = PostEntity.fromJson(post.toJsonForEntity());  
+        const postEntity = PostEntity.fromJson(post.toJsonForEntity());
         return new Promise((resolve) => {
             resolve(postEntity);
         });
@@ -49,9 +49,9 @@ export default class PostRepositoryImpl implements PostRepository {
     async findByUserId(
         userId: string,
         _?: { [key: string]: any } | undefined
-    ): Promise<PostEntity[] > {
+    ): Promise<PostEntity[]> {
         const posts = await this.postDatasource.findByUserId(userId);
-        
+
         if (posts.length === 0) {
             return new Promise((resolve) => {
                 resolve([]);
@@ -60,12 +60,12 @@ export default class PostRepositoryImpl implements PostRepository {
         const postEntities = posts.map((post) => {
             return PostEntity.fromJson(post.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(postEntities);
         });
     }
-   
+
     existsById(id: string): Promise<boolean> {
         return this.postDatasource.existsById(id);
     }
@@ -82,7 +82,7 @@ export default class PostRepositoryImpl implements PostRepository {
             });
         }
         const savedEntity = PostEntity.fromJson(saved.toJsonForEntity());
-        
+
         return new Promise((resolve) => {
             resolve(savedEntity);
         });
@@ -91,7 +91,7 @@ export default class PostRepositoryImpl implements PostRepository {
     public async update(
         postId: string,
         title: string,
-        body: JSON,
+        body: JSON
     ): Promise<PostEntity> {
         const entity = await this.findById(postId);
         if (entity === null) {
@@ -100,7 +100,7 @@ export default class PostRepositoryImpl implements PostRepository {
 
         entity.title = title;
         entity.body = body;
-      
+
         const updatedEntity = await this.save(entity);
 
         return new Promise((resolve) => {
@@ -127,7 +127,7 @@ export default class PostRepositoryImpl implements PostRepository {
         const postEntities = posts.map((post) => {
             return PostEntity.fromJson(post.toJsonForEntity());
         });
-        
+
         return new Promise((resolve) => {
             resolve(postEntities);
         });
@@ -136,5 +136,4 @@ export default class PostRepositoryImpl implements PostRepository {
     deleteById(id: string): Promise<void> {
         return this.postDatasource.deleteById(id);
     }
-
 }

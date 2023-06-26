@@ -2,10 +2,7 @@ import Like from "App/Data/Models/Like";
 import { Query } from "App/Data/Datasources/Abstract/LikeDatasource/Query";
 
 export default abstract class LikeDatasource {
-    public static sortColumns = [
-        "created_at",
-        "updated_at",
-    ]
+    public static sortColumns = ["created_at", "updated_at"];
 
     abstract findById(
         id: string,
@@ -38,4 +35,3 @@ export default abstract class LikeDatasource {
     ): Promise<Like[]>;
     abstract deleteById(id: string): Promise<void>;
 }
-

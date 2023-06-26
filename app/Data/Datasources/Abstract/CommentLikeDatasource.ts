@@ -2,10 +2,7 @@ import CommentLike from "App/Data/Models/CommentLike";
 import { Query } from "App/Data/Datasources/Abstract/CommentLikeDatasource/Query";
 
 export default abstract class CommentLikeDatasource {
-    public static sortColumns = [
-        "created_at",
-        "updated_at",
-    ]
+    public static sortColumns = ["created_at", "updated_at"];
 
     abstract findById(
         id: string,

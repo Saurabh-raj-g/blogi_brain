@@ -15,9 +15,9 @@ export default class CommentEntity implements BaseEntityInterface {
 
     public id: string;
 
-    public postId:string;
+    public postId: string;
 
-    public userId:string;
+    public userId: string;
 
     public comment: string;
 

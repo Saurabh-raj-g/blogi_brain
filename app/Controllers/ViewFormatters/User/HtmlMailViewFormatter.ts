@@ -2,11 +2,15 @@ import UserEntity from "App/Domain/Entities/UserEntity";
 import { Language } from "App/ValueObjects/Language";
 
 export class HtmlMailViewFormatter {
-   
-    public toJson(userEntity: UserEntity,token:string, _: Language,request:any) {
-       if(request === undefined || request ===null){
-        throw new  Error("Failed to generate mail template")
-       }
+    public toJson(
+        userEntity: UserEntity,
+        token: string,
+        _: Language,
+        request: any
+    ) {
+        if (request === undefined || request === null) {
+            throw new Error("Failed to generate mail template");
+        }
         return {
             id: userEntity.id,
             username: userEntity.username,
@@ -14,7 +18,9 @@ export class HtmlMailViewFormatter {
             description: userEntity.description,
             resetPasswordUrl: `${request.headers().origin}/something/${token}`,
             resetPasswordExpire: userEntity.resetPasswordExpire,
-            emailVerificationUrl: `${request.headers().origin}/user/email/verify/${userEntity.id}/${token}`,
+            emailVerificationUrl: `${
+                request.headers().origin
+            }/user/email/verify/${userEntity.id}/${token}`,
             emailVerificationExpire: userEntity.emailVerificationExpire,
             language: userEntity.language.toJson(),
             lastAccessedAt: userEntity.lastAccessedAt,

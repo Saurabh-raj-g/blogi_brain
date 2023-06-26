@@ -16,9 +16,9 @@ export default class LikeEntity implements BaseEntityInterface {
 
     public id: string;
 
-    public postId:string;
+    public postId: string;
 
-    public userId:string;
+    public userId: string;
 
     public like: boolean;
 

@@ -1,4 +1,4 @@
-import CommentLikeEntity from "App/Domain/Entities/CommentLikeEntity"
+import CommentLikeEntity from "App/Domain/Entities/CommentLikeEntity";
 
 export class DefaultViewFormatter {
     public toJson(commentLikeEntity: CommentLikeEntity): any {
@@ -10,6 +10,6 @@ export class DefaultViewFormatter {
             dislike: commentLikeEntity.dislike,
             createdAt: commentLikeEntity.createdAt.toISO()!,
             updatedAt: commentLikeEntity.updatedAt.toISO()!,
-        }
+        };
     }
 }
