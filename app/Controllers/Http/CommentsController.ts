@@ -92,7 +92,7 @@ export default class CommentsController {
         });
     }
 
-    public async save({ auth, request, response }) {
+    public async update({ auth, request, response }) {
         await auth.use("api").check();
         if (!auth.use("api").isLoggedIn) {
             response.status(401);
@@ -172,7 +172,7 @@ export default class CommentsController {
 
         commentEntity.comment = body;
 
-        commentEntity = await this.commentRepository.save(commentEntity);
+        commentEntity = await this.commentRepository.update(commentEntity);
 
         const formatter = new CommentFormatter();
         const comment = formatter.toJson(commentEntity);

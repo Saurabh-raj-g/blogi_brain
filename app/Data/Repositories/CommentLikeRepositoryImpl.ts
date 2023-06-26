@@ -76,7 +76,7 @@ export default class CommentLikeRepositoryImpl
         commentId: string,
         _?: { [key: string]: any } | undefined
     ): Promise<CommentLikeEntity[]> {
-        const commentLikes = await this.commentLikeDatasource.findByPostId(
+        const commentLikes:any = await this.commentLikeDatasource.findById(
             commentId
         );
 
@@ -127,7 +127,7 @@ export default class CommentLikeRepositoryImpl
             throw new Error(`Not found post ID:${commentLikeEntity.id}`);
         }
 
-        const updatedEntity = await this.save(entity);
+        const updatedEntity = await this.save(commentLikeEntity);
 
         return new Promise((resolve) => {
             resolve(updatedEntity!);

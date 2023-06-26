@@ -90,9 +90,9 @@ Route.post(
 Route.post("/comment/like/delete", "CommentLikesController.delete");
 
 // ------Comments Route -> User ------
-Route.post("/user/comment/create", "CommentsController.create");
-Route.post("/comment/update", "CommentsController.update");
-Route.post("/comment/delete", "CommentsController.delete");
+Route.post("/post/comment/create", "CommentsController.create");
+Route.post("/post/comment/update", "CommentsController.update");
+Route.post("/post/comment/delete", "CommentsController.deleteById");
 Route.get("/comment/search", "Comments/ShowController.search");
 Route.get("/comment/:id", "Comments/ShowController.findById");
 Route.get("/comment/findByPostId", "Comments/ShowController.findByPostId");

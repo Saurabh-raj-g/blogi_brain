@@ -117,7 +117,7 @@ export default class CommentRepositoryImpl implements CommentRepository {
             throw new Error(`Not found post ID:${commentEntity.id}`);
         }
 
-        const updatedEntity = await this.save(entity);
+        const updatedEntity = await this.save(commentEntity);
 
         return new Promise((resolve) => {
             resolve(updatedEntity!);
