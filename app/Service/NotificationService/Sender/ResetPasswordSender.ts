@@ -3,19 +3,19 @@ import MailGenerator from "../MailGenerator";
 import NotificationEvent from "../NotificationEvent";
 import { SenderInterface } from "./SenderInterface";
 import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
-import UserRepositoryImpl from 'App/Data/Repositories/UserRepositoryImpl';
+import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
 
 export default class ResetPasswordSender implements SenderInterface {
     private userRepository: UserRepository;
 
-    constructor(){
+    constructor() {
         this.userRepository = new UserRepositoryImpl();
     }
 
     public async send(options: { [key: string]: any } = {}): Promise<void> {
-        const { userId ,request} = options;
+        const { userId, request, token } = options;
 
-        if (userId === undefined ) {
+        if (userId === undefined) {
             return;
         }
 
@@ -30,7 +30,8 @@ export default class ResetPasswordSender implements SenderInterface {
             NotificationEvent.resetPasssword(),
             {
                 user: userEntity,
-                request
+                token,
+                request,
             }
         );
 

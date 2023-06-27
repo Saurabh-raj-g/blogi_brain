@@ -7,7 +7,7 @@ export class Language extends Base {
                 id: 1,
                 name: "en",
                 label: "English",
-            }
+            },
         ];
     }
 
@@ -18,5 +18,4 @@ export class Language extends Base {
     public isEnglish(): boolean {
         return this.getName() === "en";
     }
-
 }

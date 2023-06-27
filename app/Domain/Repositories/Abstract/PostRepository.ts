@@ -1,7 +1,7 @@
 import PostEntity from "App/Domain/Entities/PostEntity";
 import { Query } from "App/Domain/Repositories/Abstract/PostRepository/Query";
 
-export default abstract class UserRepository {
+export default abstract class PostRepository {
     abstract findById(
         id: string,
         options?: { [key: string]: any }
@@ -22,7 +22,7 @@ export default abstract class UserRepository {
     abstract update(
         postId: string,
         title: string,
-        body: JSON,
+        body: JSON
     ): Promise<PostEntity>;
     abstract totalCount(query: Query): Promise<number>;
     abstract search(

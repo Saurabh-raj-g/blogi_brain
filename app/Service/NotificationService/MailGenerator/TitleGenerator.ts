@@ -25,6 +25,10 @@ export default class TitleGenerator {
             title = this.generateResetPassswordToken(language, options);
         }
 
+        if (event.isChangeEmailRequest()) {
+            title = this.generateChangeEmailRequest(language, options);
+        }
+
         return new Promise((resolve) => {
             resolve(title);
         });
@@ -41,6 +45,13 @@ export default class TitleGenerator {
         language: Language,
         _: { [key: string]: any }
     ): string {
-        return this.km.get(language, "mail.title.reset_passsword");
+        return this.km.get(language, "mail.title.reset_password");
+    }
+
+    private generateChangeEmailRequest(
+        language: Language,
+        _: { [key: string]: any }
+    ): string {
+        return this.km.get(language, "mail.title.change_email_request");
     }
 }

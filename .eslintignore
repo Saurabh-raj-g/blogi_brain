@@ -1,0 +1,16 @@
+node_modules
+build
+coverage
+.vscode
+.DS_STORE
+.DS_Store
+.env
+.env.prod
+.env.test
+tmp
+.editorconfig
+tests/data/uploads/*
+public/data/*
+package-lock.json
+app/*
+contracts/*

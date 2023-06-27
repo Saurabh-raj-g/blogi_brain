@@ -5,7 +5,6 @@ import UserDatasource from "../Abstract/UserDatasource";
 import OrderExtractor from "./OrderExtractor";
 import Order from "./OrderExtractor/Order";
 
-
 export default class UserLocalDatasourceImpl implements UserDatasource {
     findById(
         id: string,
@@ -132,7 +131,7 @@ export default class UserLocalDatasourceImpl implements UserDatasource {
 
     private async resolveEntities(query: Query): Promise<User[]> {
         const queryBuilder = User.query();
-        
+
         await this.appendConditionsToQueryBuilder(queryBuilder, query);
 
         queryBuilder.offset(query.offset);
@@ -181,7 +180,6 @@ export default class UserLocalDatasourceImpl implements UserDatasource {
         const emails = query.emails;
         const notEmails = query.notEmails;
 
-
         const minLastAccessedAt = query.minLastAccessedAt;
         const maxLastAccessedAt = query.maxLastAccessedAt;
 
@@ -207,9 +205,8 @@ export default class UserLocalDatasourceImpl implements UserDatasource {
             }
         }
 
-
         if (fullName !== null) {
-            queryBuilder.where("full_name","LIKE", `%${fullName}%`);
+            queryBuilder.where("full_name", "LIKE", `%${fullName}%`);
         }
         if (fullNames !== null) {
             if (fullNames.length === 0) {
@@ -228,7 +225,7 @@ export default class UserLocalDatasourceImpl implements UserDatasource {
             queryBuilder.where("verified", verified);
         }
         if (title !== null) {
-            queryBuilder.where("title","LIKE", `%${title}%` );
+            queryBuilder.where("title", "LIKE", `%${title}%`);
         }
         if (titles !== null) {
             if (titles.length === 0) {

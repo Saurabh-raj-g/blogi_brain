@@ -40,8 +40,8 @@ export default abstract class UserRepository {
     abstract update(
         userId: string,
         username: string,
-        title: string |null,
-        description: string | null,
+        title: string | null,
+        description: string | null
     ): Promise<UserEntity>;
     abstract totalCount(query: Query): Promise<number>;
     abstract search(

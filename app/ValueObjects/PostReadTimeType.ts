@@ -17,7 +17,7 @@ export class PostReadTimeType extends Base {
                 id: 3,
                 name: "hour",
                 label: "hours",
-            }
+            },
         ];
     }
 
@@ -44,5 +44,4 @@ export class PostReadTimeType extends Base {
     public isHour(): boolean {
         return this.getName() === "hour";
     }
-
 }

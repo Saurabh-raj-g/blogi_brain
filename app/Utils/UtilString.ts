@@ -32,6 +32,9 @@ export default class UtilString {
         if (value === undefined) {
             return null;
         }
+        if (value === "") {
+            return null;
+        }
         return value;
     }
 

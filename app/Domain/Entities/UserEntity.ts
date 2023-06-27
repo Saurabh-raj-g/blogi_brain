@@ -25,11 +25,11 @@ export default class UserEntity implements BaseEntityInterface {
         entity.password = json.password;
         entity.rememberMeToken = json.rememberMeToken;
         entity.lastAccessedAt = json.lastAccessedAt;
-        entity.resetPasswordToken = json.resetPasswordToken,
-        entity.resetPasswordExpire = json.resetPasswordExpire,
-        entity.emailVerificationToken = json.emailVerificationToken,
-        entity.emailVerificationExpire = json.emailVerificationExpire,
-        entity.createdAt = json.createdAt;
+        (entity.resetPasswordToken = json.resetPasswordToken),
+            (entity.resetPasswordExpire = json.resetPasswordExpire),
+            (entity.emailVerificationToken = json.emailVerificationToken),
+            (entity.emailVerificationExpire = json.emailVerificationExpire),
+            (entity.createdAt = json.createdAt);
         entity.updatedAt = json.updatedAt;
 
         return entity;
@@ -37,7 +37,7 @@ export default class UserEntity implements BaseEntityInterface {
 
     public id: string;
 
-    public fullName:string;
+    public fullName: string;
 
     public username: string;
 
@@ -51,7 +51,7 @@ export default class UserEntity implements BaseEntityInterface {
 
     public avatarUrl: string | null;
 
-    public title: string |null;
+    public title: string | null;
 
     public role: UserRole;
 
@@ -62,7 +62,7 @@ export default class UserEntity implements BaseEntityInterface {
     public password: string;
 
     public rememberMeToken: string | null;
-    
+
     public resetPasswordToken: string | null;
 
     public resetPasswordExpire: DateTime | null;
@@ -98,7 +98,6 @@ export default class UserEntity implements BaseEntityInterface {
             resetPasswordExpire: this.resetPasswordExpire,
             emailVerificationToken: this.emailVerificationToken,
             emailVerificationExpire: this.emailVerificationExpire,
-
         };
         if (this.createdAt !== undefined) {
             json["createdAt"] = this.createdAt;

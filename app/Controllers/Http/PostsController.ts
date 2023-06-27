@@ -1,19 +1,18 @@
-import { DefaultViewFormatter as UserFormatter } from "App/Controllers/ViewFormatters/User/DefaultViewFormatter";
 import PostRepository from "App/Domain/Repositories/Abstract/PostRepository";
 import PostRepositoryImpl from "App/Data/Repositories/PostRepositoryImpl";
 import { PostReadTimeType } from "App/ValueObjects/PostReadTimeType";
 import { PostStatus } from "App/Data/Enums/Post";
 import PostUseCase from "App/Domain/UseCases/PostUseCase";
+import UtilString from "App/Utils/UtilString";
 
-
-export default class PostsController  {
-    private postRepository :PostRepository;
-    private postUseCase :PostUseCase;
-    constructor(){
-        this.postRepository = new PostRepositoryImpl()
+export default class PostsController {
+    private postRepository: PostRepository;
+    private postUseCase: PostUseCase;
+    constructor() {
+        this.postRepository = new PostRepositoryImpl();
         this.postUseCase = new PostUseCase();
     }
-    
+
     public async create({ auth, request, response }) {
         await auth.use("api").check();
         if (!auth.use("api").isLoggedIn) {
@@ -29,22 +28,24 @@ export default class PostsController  {
 
         const authUser = auth.use("api").user;
 
-        if(authUser.verified !== true){
-            response.status(406);
+        if (!authUser.verified) {
+            response.status(400);
             return response.send({
                 errors: [
                     {
-                        message: "email not varified",
+                        message: "email not verified",
                     },
                 ],
             });
         }
 
-        const all = request.body();
+        let { readTimeType, readTime, title, status, body } = request.body();
+        readTimeType = UtilString.getStringOrNull(readTimeType);
+        readTime = UtilString.getStringOrNull(readTime);
+        title = UtilString.getStringOrNull(title);
+        status = UtilString.getStringOrNull(status);
 
-        const {readTimeType,readTime, title,status, ...body} = all;
-
-        if (title === undefined ||title === null) {
+        if (title === undefined || title === null) {
             response.status(400);
             return response.send({
                 errors: [
@@ -55,7 +56,7 @@ export default class PostsController  {
             });
         }
 
-        if (status === undefined ||status === null) {
+        if (status === undefined || status === null) {
             response.status(400);
             return response.send({
                 errors: [
@@ -66,7 +67,7 @@ export default class PostsController  {
             });
         }
 
-        if(status === PostStatus.BANNED){
+        if (status === PostStatus.BANNED) {
             response.status(400);
             return response.send({
                 errors: [
@@ -74,11 +75,11 @@ export default class PostsController  {
                         message: `status is invalid, status:${status}`,
                     },
                 ],
-            }); 
+            });
         }
 
-        if (readTime !== undefined ||readTime !== null) {
-            if (readTimeType === undefined ||readTimeType === null) {
+        if (readTime !== undefined || readTime !== null) {
+            if (readTimeType === undefined || readTimeType === null) {
                 response.status(400);
                 return response.send({
                     errors: [
@@ -88,10 +89,10 @@ export default class PostsController  {
                     ],
                 });
             }
-            
         }
 
-        const postReadTimeType = PostReadTimeType.fromName<PostReadTimeType>(readTimeType);
+        const postReadTimeType =
+            PostReadTimeType.fromName<PostReadTimeType>(readTimeType);
         if (postReadTimeType.isUnknown()) {
             response.status(400);
             return response.send({
@@ -102,11 +103,19 @@ export default class PostsController  {
                 ],
             });
         }
-        
-        await this.postUseCase.create(authUser.id,readTimeType,readTime, title,status,body,request );
-       
+
+        await this.postUseCase.create(
+            authUser.id,
+            postReadTimeType,
+            readTime,
+            title,
+            status,
+            body,
+            request
+        );
+
         return response.send({
-            result:true
+            result: true,
         });
     }
 }
