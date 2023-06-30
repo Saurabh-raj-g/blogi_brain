@@ -1,11 +1,11 @@
 import { PostStatus } from "App/Data/Enums/Post";
-import { PostReadTimeType } from "App/ValueObjects/PostReadTimeType";
+import { ValueObjectType } from "./ValueObjectType";
 
 export type PostType = {
     id: string;
     userId: string;
     readTime: number | null;
-    readTimeType: PostReadTimeType | null;
+    readTimeType: ValueObjectType | null;
     title: string;
     status: PostStatus;
     body: JSON;

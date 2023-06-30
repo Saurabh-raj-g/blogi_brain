@@ -7,7 +7,7 @@ export class DefaultViewFormatter {
             id: postEntity.id,
             userId: postEntity.userId,
             readTime: postEntity.readTime,
-            readTimeType: postEntity.readTimeType,
+            readTimeType: postEntity.readTimeType === null ? null : postEntity.readTimeType?.toJson(),
             title: postEntity.title,
             status: postEntity.status,
             body: postEntity.body,

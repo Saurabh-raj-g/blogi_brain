@@ -29,7 +29,7 @@ export default class PostEntity implements BaseEntityInterface {
 
     public userId: string;
 
-    public readTime: Number | null;
+    public readTime: number | null;
 
     public readTimeType: PostReadTimeType | null;
 
