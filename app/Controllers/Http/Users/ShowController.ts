@@ -1,7 +1,7 @@
 import { DefaultViewFormatter as UserFormatter } from "App/Controllers/ViewFormatters/User/DefaultViewFormatter";
 import UserRepositoryImpl from "App/Data/Repositories/UserRepositoryImpl";
 import UserRepository from "App/Domain/Repositories/Abstract/UserRepository";
-
+import { DefaultViewFormatter as PublicUserFormatter } from "App/Controllers/ViewFormatters/PublicUser/DefaultViewFormatter";
 export default class ShowController {
     private userRepository: UserRepository;
     constructor() {
@@ -35,6 +35,27 @@ export default class ShowController {
         }
 
         const formatter = new UserFormatter();
+        const userJson = formatter.toJson(userEntity);
+
+        return response.send({
+            user: userJson,
+        });
+    }
+     public async findPublicUserById({ request, response }) {
+      const { id } = request.qs();
+        const userEntity = await this.userRepository.findById(id);
+        if (userEntity == null) {
+            response.status(404);
+            return response.send({
+                errors: [
+                    {
+                        message: `Not found the user, id:${id}`,
+                    },
+                ],
+            });
+        }
+
+        const formatter = new PublicUserFormatter();
         const userJson = formatter.toJson(userEntity);
 
         return response.send({

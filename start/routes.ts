@@ -31,6 +31,7 @@ Route.get("/user/email/verify", "UsersController.verifyEmail");
 Route.get("/user/isUsernameAvailable", "UsersController.isUsernameAvailable");
 Route.get("/user/isEmailAvailable", "UsersController.isEmailAvailable");
 Route.get("/user/me", "Users/ShowController.me");
+Route.get("/user/findPublicUserById", "Users/ShowController.findPublicUserById");
 
 Route.post("/user/create", "UsersController.create");
 Route.post("/user/login", "UsersController.login");
